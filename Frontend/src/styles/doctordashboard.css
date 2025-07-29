@@ -1,0 +1,78 @@
+.doctor-dashboard-container {
+    margin-top: 40px;
+    position: relative;
+    z-index: 2;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .doctor-dashboard-card {
+    background-color: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+  }
+  
+  .doctor-dashboard-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Table styling */
+  .doctor-dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .doctor-dashboard-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+  }
+  
+  .doctor-dashboard-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .doctor-dashboard-table .label-col {
+    font-weight: bold;
+    width: 30%;
+    border-right: none;
+  }
+  
+  .doctor-dashboard-table .colon-col {
+    text-align: center;
+    width: 5%;
+    font-weight: bold;
+  }
+  
+  .doctor-dashboard-table .value-col {
+    width: 65%;
+  }
+  
+  /* 👉 Even row: full-row background */
+  .doctor-dashboard-table tr.even-row {
+    background-color: #f0fbff;
+  }
+  
+  .doctor-dashboard-table tr:not(.even-row) {
+    background-color: #fff;
+  }
+  .doctor-dashboard-quote {
+    font-style: italic;
+    font-size: 1rem;
+    color: #555;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+  }
+  

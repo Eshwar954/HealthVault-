@@ -1,0 +1,217 @@
+/* ---- General Layout ---- */
+.upload-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* ---- Header Section ---- */
+  .upload-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #eef4fb;
+    color: #003366;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .upload-header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  
+  .open-panel-btn {
+    background: #004aad;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .open-panel-btn:hover {
+    background: #003d82;
+  }
+  
+  /* ---- Upload Box (Dotted Border) ---- */
+  .upload-box {
+    width: 100%;
+    height: 250px; /* Adjusted Size */
+    border: 10px dashed #004aad;
+    background: #f8fbff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .upload-box:hover {
+    background: #e3f0ff;
+  }
+  
+  .upload-box i {
+    font-size: 50px;
+    color: #004aad;
+  }
+  
+  .upload-box p {
+    font-size: 18px;
+    color: #004aad;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  /* ---- Side Panel ---- */
+  .side-panel {
+    position: fixed;
+    top: 0;
+    right: -420px; /* Initially hidden */
+    width: 400px;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    transition: right 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+  }
+  
+  .side-panel.open {
+    right: 0;
+  }
+  
+  .close-panel-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: red;
+  }
+  
+  .side-panel h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #004aad;
+  }
+  
+  /* ---- Form Inputs ---- */
+  .side-panel input,
+  .side-panel select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .side-panel button {
+    width: 100%;
+    background: #004aad;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease;
+  }
+  
+  .side-panel button:hover {
+    background: #003d82;
+  }
+  
+  /* ---- Recent Files Table ---- */
+  .recent-files {
+    margin-top: 20px;
+    background: #e6f2fa;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  .recent-files h3 {
+    text-align: center;
+    color: #004aad;
+    margin-bottom: 10px;
+  }
+  
+  .recent-files table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+  }
+  
+  .recent-files th,
+  .recent-files td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .recent-files th {
+    background: #cde8f7;
+    color: #004aad;
+    font-weight: bold;
+  }
+  
+  /* ---- Action Buttons ---- */
+  .view-link {
+    text-decoration: none;
+    font-size: 16px;
+    color: #004aad;
+    font-weight: bold;
+  }
+  
+  .view-link:hover {
+    color: #003d82;
+  }
+  
+  .delete-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: red;
+  }
+  
+  .delete-btn:hover {
+    color: darkred;
+  }
+  
+  /* ---- Responsive Design ---- */
+  @media (max-width: 768px) {
+    .upload-container {
+      padding: 10px;
+    }
+  
+    .upload-header {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .open-panel-btn {
+      margin-top: 10px;
+    }
+  
+    .side-panel {
+      width: 100%;
+    }
+  
+    .recent-files table {
+      font-size: 14px;
+    }
+  }
+  

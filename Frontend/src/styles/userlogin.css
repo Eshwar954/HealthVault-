@@ -1,0 +1,115 @@
+/* General Styling */
+.user-login {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* Main Container */
+.user-login .portal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 5%;
+  gap: 60px;
+}
+
+/* Left Section with Image */
+.user-login .portal-image-wrapper {
+  display: flex;
+  justify-content:left;
+  align-items: center;
+}
+
+.user-login .portal-image {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  border-radius: 16px;
+}
+
+/* Right Section with Content */
+.user-login .portal-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+.user-login .portal-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #1e3a8a;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.user-login .portal-heading {
+  font-size: 40px;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 16px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.user-login .highlight {
+  color: #ff5f56;
+}
+
+.user-login .portal-description {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 24px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* Buttons */
+.user-login .portal-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-login .btn {
+  padding: 14px 28px;
+  font-size: 16px;
+  border: none;
+  border-radius: 24px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.user-login .login-btn {
+  background-color: #1e90ff;
+  color: #ffffff;
+}
+
+.user-login .signup-btn {
+  background-color: #87cefa;
+  color: #1e3a8a;
+}
+
+.user-login .btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-login .portal {
+    flex-direction: column;
+    padding: 30px 10%;
+  }
+
+  .user-login .portal-content {
+    text-align: center;
+  }
+
+  .user-login .portal-buttons {
+    justify-content: center;
+  }
+}

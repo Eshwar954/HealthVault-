@@ -1,0 +1,45 @@
+.user-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .user-info-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+  }
+  
+  .user-info-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .user-info-table .label-col {
+    font-weight: bold;
+    width: 30%;
+    border-right: none;
+  }
+  
+  .user-info-table .colon-col {
+    text-align: center;
+    width: 5%;
+    font-weight: bold;
+  }
+  
+  .user-info-table .value-col {
+    width: 65%;
+  }
+  
+  /* 👉 Even row: full-row background */
+  .user-info-table tr.even-row {
+    background-color: #f0fbff;
+  }
+  
+  /* Optional: Header row or odd rows */
+  .user-info-table tr:not(.even-row) {
+    background-color: #fff;
+  }
+    

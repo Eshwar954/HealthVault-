@@ -1,0 +1,172 @@
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif; /* You might need to install this font */
+    background-color: white; /* Light blueish background */
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  .app {
+    display: flex;
+    flex-direction: column;
+    min-height: 60vh;
+  }
+  
+  .header {
+    background-color: #fff;
+    padding-top: 0; /* Removed top padding */
+    padding-bottom: 20px; /* Kept bottom padding */
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    margin-left: 50px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .header h1 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.6em;
+    font-weight: 600;
+  }
+  
+  .main-content {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px; /* Adjusted horizontal padding */
+    background-color: #ecfcff;
+    gap:60px;
+  }
+  
+  .portal-text {
+    /* Add any specific styling for the "Doctor's Portal" text here */
+    margin-bottom: 20px; /* Add some space below the text */
+    font-size: 1.2em; /* Adjust font size as needed */
+    color: #1e3a8a; /* Example color */
+    text-align: center;
+  }
+  
+  
+  .left-section {
+    max-width: 550px;
+    padding-right: 0px; /* Reduced right padding */
+    text-align: center;
+  }
+  
+  .left-section h2 {
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    line-height: 1.1;
+    font-weight: 1000;
+    color: #1e3a8a;
+  }
+  
+  .left-section .highlight {
+    color: #1e3a8a;
+  }
+  
+  .left-section p {
+    font-size: 1em;
+    color: #1e3a8a;
+    line-height: 1.7;
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  
+  .button-group button {
+    padding: 12px 24px; /* Wider padding! */
+    border: none;
+    border-radius: 10px; /* Less rounded */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 120px; /* Ensures consistent button width */
+    text-align: center;
+  }
+  
+  .login-button {
+    background-color: #5e9eff; /* Soft blue */
+    color: white;
+  }
+  
+  .signup-button {
+    background-color: #f38de9; /* Soft pink */
+    color: white;
+  }
+  
+  .login-button:hover {
+    background-color: #387be5;
+    transform: translateY(-2px);
+  }
+  
+  .signup-button:hover {
+    background-color: #d968c7;
+    transform: translateY(-2px);
+  }
+  
+  
+  
+  .right-section {
+    max-width: 500px;
+    padding-left: 0px; /* Reduced left padding */
+    margin-left: 0px; /* Adjust margin based on preference */
+    
+  }
+  
+  .doctor-image {
+    max-width: 100%;
+    height: auto;
+    align-items: left;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .header {
+      margin-left: 20px;
+    }
+  
+    .main-content {
+      flex-direction: column;
+      padding: 30px;
+    }
+  
+    .left-section {
+      padding-right: 0;
+      margin-bottom: 15px; /* Adjust bottom margin */
+    }
+  
+    .right-section {
+      margin-left: 0px; /* Closer together on mobile */
+    }
+  
+  
+    .left-section h2 {
+      font-size: 2.2em;
+    }
+  
+    .button-group {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .button-group button {
+      margin: 10px 0;
+    }
+  
+   
+    .doctor-image {
+      max-width: 80%;
+    }
+  }

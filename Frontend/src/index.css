@@ -1,0 +1,52 @@
+/* Global Box-Sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure that body takes full height */
+html,
+body {
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #f8f9fa;
+  /*overflow-x: hidden; /* Prevent horizontal scrolling */
+  /*overflow-y: auto;   /* Allow vertical scrolling only if needed */
+}
+
+/* Prevent content from overflowing */
+body {
+  /*overflow: hidden; *//* Prevent horizontal scrollbar */
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar Styles (if needed) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #007bff;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+/* Ensure images don't overflow their containers */
+img {
+  max-width: 100%; /* Make images responsive */
+  height: auto;
+}
+
+/* Additional Layout Adjustments */
+html, body {
+  min-height: 100%;
+}
+
+/* Additional styles for making sure the page looks good and scrolls properly */

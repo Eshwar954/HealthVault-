@@ -1,0 +1,194 @@
+/* ===== Overall Container ===== */
+body{
+  background-color: #f4f6f9;
+
+
+}
+.file-board-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem 1rem;
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', sans-serif;
+    color: black;
+  }
+  
+  /* ===== Heading ===== */
+  .file-board-heading {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: black;
+  }
+  
+  /* ===== Controls: Search, Sort, Filter ===== */
+  .file-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+  }
+  
+  .file-controls input[type="text"] {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.2s ease;
+    border-radius: 40px;
+  }
+  
+  .file-controls input[type="text"]:focus {
+    border-color: #4a90e2;
+    outline: none;
+  }
+  
+  /* This targets the second row (the dropdowns) */
+  .file-controls > div:last-child {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+  
+  .file-controls select {
+    flex: 1;
+    min-width: 180px;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: white;
+    transition: border-color 0.2s ease;
+  }
+  
+  .file-controls select:focus {
+    border-color: #4a90e2;
+    outline: none;
+  }
+  
+  @media (max-width: 600px) {
+    .file-controls > div:last-child {
+      flex-direction: column;
+    }
+  
+    .file-controls select {
+      width: 100%;
+    }
+  }
+  
+  
+  /* ===== File Grid ===== */
+  .file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+    gap: 2rem;
+  }
+  
+  /* ===== File Card ===== */
+  .file-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 270px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .file-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* ===== Thumbnail ===== */
+  .file-thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 0.8rem;
+  }
+  
+  /* ===== File Info ===== */
+  .file-info {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.85rem;
+    color: #444;
+    width: 100%;
+  }
+  
+  .file-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: #2c3e50;
+    word-break: break-word;
+  }
+  
+  /* ===== View Link ===== */
+  .view-link {
+    margin-top: auto;
+    background-color: #007bff;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: background-color 0.3s;
+  }
+  
+  .view-link:hover {
+    background-color: #0056b3;
+  }
+  
+  /* ===== Responsive Adjustments ===== */
+  @media (max-width: 768px) {
+    .file-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .file-card {
+      height: auto;
+      padding: 1rem;
+    }
+  }
+  
+  .pdf-modal {
+    position: relative;
+    background: white;
+    padding: 1rem;
+    max-width: 800px;
+    margin: auto;
+    top: 10%;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    overflow: auto;
+  }
+  
+  .pdf-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1000;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 1.2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
