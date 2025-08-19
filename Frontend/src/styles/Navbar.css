@@ -72,6 +72,19 @@
   gap: 10px;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #dc3545, #a71d2a);
+  color: white;
+  padding: 12px 35px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  transition: all 0.4s ease;
+  cursor: pointer;
 }
 
 

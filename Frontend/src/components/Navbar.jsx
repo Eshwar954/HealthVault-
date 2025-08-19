@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Navbar.css';
@@ -34,7 +34,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light mt-3">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light mt-3 sticky-top shadow-sm">
       <div className="container px-5">
         {/* Logo */}
         <Link to="/" className="navbar-brand">HealthVault</Link>
@@ -98,15 +98,15 @@ const Navbar = () => {
         {/* Right Side Login/Logout */}
         <div className="nav-item dropdown">
           {isLoggedIn ? (
-            <button className="btn btn-outline-danger" onClick={handleLogout}>
+            <button className="logout-btn" onClick={handleLogout}>
               Logout
             </button>
           ) : (
             <div className="dropdown">
-              <button 
-                className="btn btn-outline-primary dropdown-toggle" 
-                id="dropdownMenuButton" 
-                data-bs-toggle="dropdown" 
+              <button
+                className="login-btn dropdown-toggle"
+                id="dropdownMenuButton"
+                data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 Login

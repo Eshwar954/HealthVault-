@@ -1,5 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Landingpage from './pages/Landingpage';
@@ -45,6 +46,7 @@ function App() {
         <Route path="/diagnostic/dashboard" element={role === 'diagnostic center' ? <DiagnosticDashboard /> : <Navigate to="/UserLogin" />} />
         
       </Routes>
+      <Footer />
     </>
   );
 }
