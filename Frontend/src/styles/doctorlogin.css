@@ -1,172 +1,198 @@
-body {
-    margin: 0;
-    font-family: 'Montserrat', sans-serif; /* You might need to install this font */
-    background-color: white; /* Light blueish background */
-    color: #333;
-    line-height: 1.6;
+/* ===== DOCTOR LOGIN - CLEAN & ELEGANT ===== */
+.doctor-login-final {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: "Inter", system-ui, sans-serif;
+  background: #f9fafb;
+  color: #0f172a;
+}
+
+/* container */
+.doctor-login-container {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  width: min(1200px, 95%);
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.15);
+  overflow: hidden;
+}
+
+/* ===== LEFT SECTION ===== */
+.doctor-left {
+  position: relative;
+  background: linear-gradient(180deg, #eff6ff, #e0f2fe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.visual-layer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.doctor-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.95;
+}
+
+/* CSS vector-like shapes */
+.ring-shape {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border: 5px solid rgba(37, 99, 235, 0.3);
+  border-radius: 50%;
+  top: 60px;
+  left: 60px;
+  animation: rotateSlow 12s linear infinite;
+}
+.wave-shape {
+  position: absolute;
+  bottom: 60px;
+  right: 40px;
+  width: 180px;
+  height: 60px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(14, 165, 233, 0.4),
+    rgba(14, 165, 233, 0.4) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  border-radius: 50px;
+  filter: blur(2px);
+  animation: waveMove 6s ease-in-out infinite alternate;
+}
+
+/* animations */
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes waveMove {
+  0% { transform: translateX(0); opacity: 0.8; }
+  100% { transform: translateX(20px); opacity: 1; }
+}
+
+/* overlay text */
+.overlay-text {
+  position: absolute;
+  bottom: 30px;
+  left: 40px;
+  color: #1e3a8a;
+  z-index: 3;
+}
+.overlay-text h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.overlay-text p {
+  font-size: 1rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+/* ===== RIGHT SECTION ===== */
+.doctor-right {
+  padding: clamp(2rem, 4vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #2563eb;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  background: rgba(37, 99, 235, 0.08);
+  padding: 6px 14px;
+  border-radius: 999px;
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: clamp(2rem, 2.4vw + 1rem, 3rem);
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+.title span {
+  color: #2563eb;
+}
+
+.subtitle {
+  color: #475569;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1.8rem;
+}
+
+/* Buttons */
+.actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.6rem;
+}
+.btn {
+  text-decoration: none;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+.btn.primary {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+}
+.btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+}
+.btn.outline {
+  border: 2px solid #2563eb;
+  color: #2563eb;
+  background: transparent;
+}
+.btn.outline:hover {
+  background: rgba(37, 99, 235, 0.08);
+}
+
+/* features */
+.features {
+  display: grid;
+  gap: 8px;
+  color: #475569;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .doctor-login-container {
+    grid-template-columns: 1fr;
   }
-  
-  .app {
-    display: flex;
-    flex-direction: column;
-    min-height: 60vh;
+  .doctor-left {
+    display: none;
   }
-  
-  .header {
-    background-color: #fff;
-    padding-top: 0; /* Removed top padding */
-    padding-bottom: 20px; /* Kept bottom padding */
-    text-align: left;
-    border-bottom: 1px solid #e0e0e0;
-    margin-left: 50px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .header h1 {
-    color: #2c3e50;
-    margin: 0;
-    font-size: 1.6em;
-    font-weight: 600;
-  }
-  
-  .main-content {
-    display: flex;
-    flex-grow: 1;
-    align-items: center;
-    justify-content: center;
-    padding: 50px 20px; /* Adjusted horizontal padding */
-    background-color: #ecfcff;
-    gap:60px;
-  }
-  
-  .portal-text {
-    /* Add any specific styling for the "Doctor's Portal" text here */
-    margin-bottom: 20px; /* Add some space below the text */
-    font-size: 1.2em; /* Adjust font size as needed */
-    color: #1e3a8a; /* Example color */
+  .doctor-right {
     text-align: center;
   }
-  
-  
-  .left-section {
-    max-width: 550px;
-    padding-right: 0px; /* Reduced right padding */
-    text-align: center;
+  .eyebrow {
+    margin-inline: auto;
   }
-  
-  .left-section h2 {
-    font-size: 2.8em;
-    margin-bottom: 10px;
-    line-height: 1.1;
-    font-weight: 1000;
-    color: #1e3a8a;
-  }
-  
-  .left-section .highlight {
-    color: #1e3a8a;
-  }
-  
-  .left-section p {
-    font-size: 1em;
-    color: #1e3a8a;
-    line-height: 1.7;
-    margin-top: 20px;
-    margin-bottom: 40px;
-  }
-  
-  .button-group {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-  }
-  
-  .button-group button {
-    padding: 12px 24px; /* Wider padding! */
-    border: none;
-    border-radius: 10px; /* Less rounded */
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-width: 120px; /* Ensures consistent button width */
-    text-align: center;
-  }
-  
-  .login-button {
-    background-color: #5e9eff; /* Soft blue */
-    color: white;
-  }
-  
-  .signup-button {
-    background-color: #f38de9; /* Soft pink */
-    color: white;
-  }
-  
-  .login-button:hover {
-    background-color: #387be5;
-    transform: translateY(-2px);
-  }
-  
-  .signup-button:hover {
-    background-color: #d968c7;
-    transform: translateY(-2px);
-  }
-  
-  
-  
-  .right-section {
-    max-width: 500px;
-    padding-left: 0px; /* Reduced left padding */
-    margin-left: 0px; /* Adjust margin based on preference */
-    
-  }
-  
-  .doctor-image {
-    max-width: 100%;
-    height: auto;
-    align-items: left;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .header {
-      margin-left: 20px;
-    }
-  
-    .main-content {
-      flex-direction: column;
-      padding: 30px;
-    }
-  
-    .left-section {
-      padding-right: 0;
-      margin-bottom: 15px; /* Adjust bottom margin */
-    }
-  
-    .right-section {
-      margin-left: 0px; /* Closer together on mobile */
-    }
-  
-  
-    .left-section h2 {
-      font-size: 2.2em;
-    }
-  
-    .button-group {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .button-group button {
-      margin: 10px 0;
-    }
-  
-   
-    .doctor-image {
-      max-width: 80%;
-    }
-  }
+}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/userlogininner.css';
+
 const UserLoginInner = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -9,7 +10,7 @@ const UserLoginInner = () => {
   });
 
   const { email, password, role } = formData;
-  // Handle input changes
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -18,10 +19,8 @@ const UserLoginInner = () => {
     }));
   };
 
-  // Handle login submission
   const handleLogin = async (e) => {
     e.preventDefault();
-
     if (!email || !password) {
       alert('Please fill in all fields');
       return;
@@ -37,29 +36,17 @@ const UserLoginInner = () => {
       const response = await axios.post(
         'http://localhost:5000/api/auth/login',
         { email, password, role },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+        { headers: { 'Content-Type': 'application/json' } }
       );
 
-      const { token, role: userRole, userId,loginId} = response.data;
-
-      // Store token and user details in localStorage
+      const { token, role: userRole, userId, loginId } = response.data;
       localStorage.setItem('token', token);
       localStorage.setItem('role', userRole);
       localStorage.setItem('userId', userId);
       localStorage.setItem('email', email);
       localStorage.setItem('loginId', loginId);
 
-      console.log(`Email stored in localStorage: ${localStorage.getItem('email')}`);
-      console.log(`Login ID stored in localStorage: ${localStorage.getItem('loginId')}`);
-
-
       alert('Login successful!');
-
-      // Redirect based on role
       switch (userRole) {
         case 'doctor':
           window.location.href = '/doctor/dashboard';
@@ -69,7 +56,6 @@ const UserLoginInner = () => {
           break;
         default:
           window.location.href = '/user/dashboard';
-          break;
       }
     } catch (error) {
       console.error('Login Error:', error);
@@ -78,41 +64,53 @@ const UserLoginInner = () => {
   };
 
   return (
-    <div className="login-container">
-      <form onSubmit={handleLogin} className="login-form">
-        <h2>WELCOME!</h2>
+    <main className="uv-login">
+      <section className="uv-glass">
+        <div className="uv-left">
+          <h1 className="uv-brand">HealthVault</h1>
+          <p className="uv-tagline">Your health. Your data. Your control.</p>
+          <div className="uv-graphic">
+            <div className="uv-pulse" />
+            <div className="uv-dots" />
+          </div>
+        </div>
 
-        {/* Email */}
-        <input className='hii'
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={email}
-          onChange={handleChange}
-          required
-        />
+        <div className="uv-right">
+          <h2 className="uv-title">Welcome</h2>
+          <p className="uv-subtitle">Sign in to access your dashboard</p>
 
-        {/* Password */}
-        <input className='hii'
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password}
-          onChange={handleChange}
-          required
-        />
+          <form className="uv-form" onSubmit={handleLogin}>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email address"
+              value={email}
+              onChange={handleChange}
+              required
+            />
 
-        {/* Role Dropdown */}
-        <select className='hello' name="role" value={role} onChange={handleChange}>
-          <option value="user">User</option>
-          <option value="doctor">Doctor</option>
-          <option value="diagnostic center">Diagnostic Center</option>
-        </select>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={password}
+              onChange={handleChange}
+              required
+            />
 
-        {/* Login Button */}
-        <button className="hi"type="submit">Login</button>
-      </form>
-    </div>
+            <select name="role" value={role} onChange={handleChange}>
+              <option value="user">User</option>
+              <option value="doctor">Doctor</option>
+              <option value="diagnostic center">Diagnostic Center</option>
+            </select>
+
+            <button type="submit" className="uv-btn">
+              Login
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
   );
 };
 

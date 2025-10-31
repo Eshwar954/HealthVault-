@@ -1,130 +1,27 @@
-/* Navbar Styling */
-.navbar {
-  background-color: #f8f9fa; /* Light background for navbar */
+/* Single, enhanced Navbar (scoped) */
+.app-navbar.navbar{
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,.8);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid var(--border, #e5e5e5)
 }
-
-/* Navbar Brand */
-.navbar-brand {
-  font-size: 1.8rem;
-  color: #004aad;
+.app-navbar .navbar-brand{ font-size:1.6rem; color:var(--brand-700, #004aad); font-weight:900 }
+.app-navbar .navbar-brand:hover{ color:var(--brand-700, #004aad) }
+.app-navbar .navbar-nav{ display:flex; gap:8px; justify-content:space-evenly }
+.app-navbar .nav-link{ color:var(--brand-700, #004aad); font-size:1.05rem; font-weight:600; position:relative; padding:10px 14px; margin:14px; transition:color .2s }
+.app-navbar .nav-link::after{ content:""; position:absolute; bottom:0; left:50%; width:0; height:2px; background:var(--brand-500, #007bff); transition:width .25s, left .25s }
+.app-navbar .nav-link:hover{ color:var(--brand-500, #007bff) }
+.app-navbar .nav-link:hover::after{ left:0; width:100% }
+.app-navbar .nav-link.active{ color:#0056b3; text-decoration:underline }
+.app-navbar .login-btn{
+  background:linear-gradient(135deg, var(--brand-500, #007bff), var(--brand-700, #004aad));
+  color:#fff; padding:12px 28px; font-weight:800; border:none; border-radius:999px; transition:transform .2s, filter .2s
 }
-
-.navbar-brand:hover {
-  color: #004aad; /* Darker blue on hover */
-}
-
-/* Navbar Links */
-/* Make navbar links evenly spaced */
-.navbar-nav {
-  display: flex;
-  justify-content: space-evenly; /* Equal spacing between nav items */
-}
-
-.navbar-nav .nav-link {
-  color: #004aad; /* Default dark color */
-  font-size: 1.2rem;
-  font-weight: 400; /* Medium weight font */
-  position: relative; /* Required for the pseudo-element positioning */
-  padding: 10px 15px; /* Padding for better click area */
-  margin: 20px;
-  transition: color 0.3s ease;
-}
-
-.navbar-nav .nav-link::after {
-  content: ''; /* Creating an empty pseudo-element */
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background-color: #007bff;
-  transition: width 0.3s ease, left 0.3s ease; /* Transition to animate underline */
-}
-
-.navbar-nav .nav-link:hover::after {
-  left: 0; /* Move the underline to start from the left */
-  width: 100%; /* Expand the underline to full width */
-}
-
-.navbar-nav .nav-link:hover {
-  color: #007bff !important; /* Blue color on hover */
-}
-
-/* Active Link Styling */
-.navbar-nav .nav-link.active {
-  color: #0056b3; /* Slightly darker blue for active link */
-  text-decoration: underline; /* Underline for active links */
-}
-
-/* Dropdown Button Customization */
-/* Custom Login Button */
-.login-btn {
-  background: linear-gradient(135deg, #007bff, #004aad);
-  color: white;
-  padding: 12px 35px;
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 50px;
-  transition: all 0.4s ease;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  overflow: hidden;
-}
-
-
-.login-btn::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  /*background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent 40%);
-  transition: opacity 0.4s, transform 0.4s;*/
-  transform: scale(0);
-  opacity: 0;
-}
-
-.login-btn:hover::before {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.login-btn:hover {
-  background: linear-gradient(135deg, #0056b3, #004080);
-  /*box-shadow: 0px 8px 20px rgba(0, 123, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.5);
-  transform: translateY(-3px) scale(1.05);*/
-}
-
-/* Dropdown Styling */
-.dropdown-menu {
-  border-radius: 10px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-  border: none;
-  overflow: hidden;
-}
-
-.dropdown-item {
-  padding: 12px 20px;
-  font-size: 1rem;
-  transition: all 0.2s ease-in-out;
-}
-
-.dropdown-item:hover {
-  background-color: #007bff;
-  color: white;
-  transform: translateX(5px); /* Slight slide effect */
-}
-
-/* Navbar Mobile View */
-@media (max-width: 768px) {
-  .navbar-nav {
-    text-align: center;
-  }
-  .navbar-nav .nav-item {
-    margin-bottom: 15px; /* Spacing between mobile nav items */
-  }
+.app-navbar .login-btn:hover{ transform:translateY(-2px); filter:brightness(1.04) }
+.app-navbar .dropdown-menu{ border-radius:12px; border:none; box-shadow:0 5px 15px rgba(0,0,0,.2) }
+.app-navbar .dropdown-item{ padding:12px 18px; font-size:1rem; transition: transform .15s, background .2s }
+.app-navbar .dropdown-item:hover{ background:var(--brand-500, #007bff); color:#fff; transform:translateX(4px) }
+@media (max-width:768px){
+  .app-navbar .navbar-nav{ text-align:center }
+  .app-navbar .navbar-nav .nav-item{ margin-bottom:10px }
 }

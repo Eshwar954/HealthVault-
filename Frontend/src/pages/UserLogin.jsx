@@ -1,36 +1,73 @@
-import React from 'react';
-import '../styles/userlogin.css';
-import LoginImage from '../assets/login_image_letf.png';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import "../styles/userlogin.css";
 
 const UserLogin = () => {
   return (
-    <div className="user-login">
-      <div className="portal">
-        {/* Left Section with Image */}
-        <div className="portal-image-wrapper">
-          <img src={LoginImage} alt="Portal Preview" className="portal-image" />
-        </div>
+    <main className="user-login">
+      <section className="ul-wrap">
+        {/* LEFT: Visual Showcase */}
+        <aside className="ul-left" aria-hidden="true">
+          {/* Gradient Blobs */}
+          <div className="ul-blob b1"></div>
+          <div className="ul-blob b2"></div>
 
-        {/* Right Section with Text and Buttons */}
-        <div className="portal-content">
-          <h4 className="portal-title">User’s Portal</h4>
-          <h1 className="portal-heading">
+          {/* Animated Mock UI Showcase */}
+          <div className="ul-showcase">
+            <div className="ul-showcase">
+              <div className="mock-dashboard">
+                <h3 className="mock-brand">HealthVault</h3>
+                <p className="mock-tagline">Your records, your control</p>
+
+                <div className="mock-header" />
+                <div className="mock-chart" />
+                <div className="mock-table">
+                  {[...Array(4)].map((_, i) => (
+                    <div key={i} className="mock-row" />
+                  ))}
+                </div>
+              </div>
+
+              <div className="mock-phone">
+                <div className="mock-screen">
+                  <span className="mock-app">HV</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        {/* RIGHT: Login CTA */}
+        <section className="ul-right" role="region" aria-label="User login">
+          <span className="ul-eyebrow">user’s portal</span>
+
+          <h1 className="ul-title">
             Store, <span>Access</span> & <span>Share</span>
           </h1>
-          <p className="portal-description">
-            Store all your health records in one place, accessible from any device, anytime.
-            Share your history seamlessly with any healthcare provider for efficient care.
-            Effortlessly track, manage, and share your medical data, ensuring timely and informed
-            healthcare decisions.
+
+          <p className="ul-subtitle">
+            Keep all your health records in one secure place — accessible on any
+            device, anytime. Share your history with doctors, clinics, or
+            diagnostic centers. Manage smarter, live healthier.
           </p>
-          <div className="portal-buttons">
-            <Link to="/UserLogininner"><button className="btn login-btn">Login</button></Link>
-            <Link to="/register"><button className="btn signup-btn">Signup</button></Link>
+
+          <div className="ul-actions">
+            <Link to="/UserLogininner" className="ul-btn ul-btn-primary">
+              Login
+            </Link>
+            <Link to="/register" className="ul-btn ul-btn-ghost">
+              Signup
+            </Link>
           </div>
-        </div>
-      </div>
-    </div>
+
+          <ul className="ul-trust">
+            <li>🔒 Zero-knowledge storage</li>
+            <li>⚡ Instant access</li>
+            <li>📱 Works everywhere</li>
+          </ul>
+        </section>
+      </section>
+    </main>
   );
 };
 
