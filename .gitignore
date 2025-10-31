@@ -1,0 +1,14 @@
+# === FRONTEND ===
+frontend/node_modules/
+frontend/.env
+frontend/build/
+frontend/dist/
+
+# === BACKEND ===
+backend/node_modules/
+backend/.env
+
+# === COMMON ===
+*.log
+.DS_Store
+Thumbs.db
