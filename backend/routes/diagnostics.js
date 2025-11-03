@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   getDiagnostic,
   updateDiagnostic
-} = require("../controllers/diagnosticController");
+} = require("../Controllers/diagnosticController");
 
 router.get("/", getDiagnostic); // GET /api/diagnostic?email=...
 router.put("/update", updateDiagnostic); // PUT /api/diagnostic/update
