@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Landingpage from './pages/Landingpage';
 import UserLogin from './pages/UserLogin';
-import UserLoginInner from './pages/userlogininner';
+import UserLoginInner from './pages/Userlogininner';
 import UserDashboard from './pages/UserDashboard';
 import DoctorDashboard from './pages/DoctorDashboard';
 import DiagnosticDashboard from './pages/DiagnosticDashboard';
