@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const ProfileEdit = ({ userData, setUserData, onClose }) => {
   const [formData, setFormData] = useState({ ...userData });
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,7 +17,7 @@ const ProfileEdit = ({ userData, setUserData, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/user/update`, formData);
+      await axios.put(`${BASE_URL}/api/user/update`, formData);
       setUserData(formData);
       alert('Profile updated successfully!');
       onClose(); // Close the form after submission

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/uploadfile.css"; // Ensure this file exists
-
+const BASE_URL = import.meta.env.VITE_API_URL;
 const UploadFile = () => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
@@ -38,7 +38,7 @@ const UploadFile = () => {
     console.log("Report type:", formData.get("reportType"));
 
     try {
-      await axios.post("http://localhost:5000/api/files/upload", formData, {
+      await axios.post(`${BASE_URL}/api/files/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert("File uploaded successfully");
@@ -56,7 +56,7 @@ const UploadFile = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/files/fetch/${loginId}`
+        `${BASE_URL}/api/files/fetch/${loginId}`
       );
       setUploadedFiles(response.data.files);
     } catch (error) {
@@ -74,7 +74,7 @@ const UploadFile = () => {
 
   const handleDelete = async (fileId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/files/delete/${fileId}`);
+      await axios.delete(`${BASE_URL}/api/files/delete/${fileId}`);
       alert("File deleted successfully");
       fetchFiles();
     } catch (error) {

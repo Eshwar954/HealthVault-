@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/doctordashboard.css";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const DoctorDashboard = () => {
   const [doctorData, setDoctorData] = useState(null);
@@ -14,7 +15,7 @@ const DoctorDashboard = () => {
         if (!storedEmail) return;
         const encodedEmail = encodeURIComponent(storedEmail);
         const res = await axios.get(
-          `http://localhost:5000/api/doctors/${encodedEmail}`
+          `${BASE_URL}/api/doctors/${encodedEmail}`
         );
         if (res.data) {
           setDoctorData(res.data);
@@ -37,7 +38,7 @@ const DoctorDashboard = () => {
     try {
       const updated = { ...formData, email: doctorData.email };
       const res = await axios.put(
-        "http://localhost:5000/api/doctors/update",
+        `${BASE_URL}/api/doctors/update`,
         updated
       );
       setDoctorData(res.data.doctor);

@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/UserFileBoard.css";
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 
 const FileCard = ({ file }) => {
   const formatDate = (isoDate) => new Date(isoDate).toLocaleDateString();
@@ -53,7 +55,7 @@ const UserFileBoard = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/files/fetch/${loginId}`
+        `${BASE_URL}/api/files/fetch/${loginId}`
       );
       setFiles(response.data.files);
       setFilteredFiles(response.data.files);
@@ -74,7 +76,7 @@ const UserFileBoard = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/files/userboard/${loginId}?limit=2`
+        `${BASE_URL}/api/files/userboard/${loginId}?limit=2`
       );
       setFiles(response.data.files);
       setFilteredFiles(response.data.files);

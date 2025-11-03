@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/UserDashboard.css"; // Ensure this file exists
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const UserDashboard = () => {
   const [userData, setUserData] = useState({
@@ -31,7 +32,7 @@ const UserDashboard = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:5000/api/user/${storedEmail}`
+          `${BASE_URL}/api/user/${storedEmail}`
         );
         if (response.data) {
           const { _id, services, userId, password, ...filteredData } = response.data;
@@ -79,7 +80,7 @@ const UserDashboard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/user/update`,formData);
+      await axios.put(`${BASE_URL}/api/user/update`,formData);
       setUserData(formData);
       alert("Profile updated successfully!");
       setIsEditing(false);

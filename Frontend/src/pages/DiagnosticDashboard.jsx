@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/UserDashboard.css";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const DiagnosticDashboard = () => {
   const [diagnosticData, setDiagnosticData] = useState({
     loginId: "",
@@ -25,7 +27,7 @@ const DiagnosticDashboard = () => {
         }
 
         const res = await axios.get(
-          `http://localhost:5000/api/diagnostic?email=${storedEmail}`
+          `${BASE_URL}/api/diagnostic?email=${storedEmail}`
         );
         if (res.data && res.data.diagnostic) {
           const { _id, password, ...filteredData } = res.data.diagnostic;
@@ -53,7 +55,7 @@ const DiagnosticDashboard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("http://localhost:5000/api/diagnostic/update", formData);
+      await axios.put(`${BASE_URL}/api/diagnostic/update`, formData);
       setDiagnosticData(formData);
       alert("Profile updated successfully!");
       setIsEditing(false);

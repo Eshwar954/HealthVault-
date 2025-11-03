@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/userlogininner.css';
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const UserLoginInner = () => {
   const [formData, setFormData] = useState({
@@ -34,7 +35,7 @@ const UserLoginInner = () => {
       }
 
       const response = await axios.post(
-        'http://localhost:5000/api/auth/login',
+        `${BASE_URL}/api/auth/login`,
         { email, password, role },
         { headers: { 'Content-Type': 'application/json' } }
       );

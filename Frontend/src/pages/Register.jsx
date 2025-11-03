@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import "../styles/register.css";
-
+const BASE_URL = import.meta.env.VITE_API_URL;
 const Register = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -45,7 +45,7 @@ const Register = () => {
             : [],
         }),
       };
-      await axios.post("http://localhost:5000/api/auth/register", payload);
+      await axios.post(`${BASE_URL}/api/auth/register`, payload);
       toast.success("Registration successful!");
       setFormData({
         name: "",

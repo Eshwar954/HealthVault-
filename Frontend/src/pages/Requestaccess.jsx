@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/requestaccess.css";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const Requestaccess = () => {
   const [patientId, setPatientId] = useState("");
@@ -38,7 +39,7 @@ const Requestaccess = () => {
     }
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/otp/request", {
+      const res = await axios.post(`${BASE_URL}/api/otp/request`, {
         loginId: patientId,
       });
       alert(res.data.message || "OTP sent!");
@@ -57,7 +58,7 @@ const Requestaccess = () => {
     }
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/otp/verify", {
+      const res = await axios.post(`${BASE_URL}/api/otp/verify`, {
         loginId: patientId,
         otp,
       });
@@ -81,7 +82,7 @@ const Requestaccess = () => {
     }
     setLoading(true);
     try {
-      const res = await axios.get(`http://localhost:5000/api/files/fetch/${patientId}`);
+      const res = await axios.get(`${BASE_URL}/api/files/fetch/${patientId}`);
       setFiles(res.data.files || []);
       setActiveSection("access");
     } catch (err) {
@@ -103,11 +104,11 @@ const Requestaccess = () => {
     formData.append("reportType", reportType);
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/files/doctor/upload", formData, {
+      const res = await axios.post(`${BASE_URL}/api/files/doctor/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
-      alert("File uploaded successfully!");
+      alert(res.data.message || "File uploaded successfully!");
       setFile(null);
       setDoctorName("");
       setReportType("");

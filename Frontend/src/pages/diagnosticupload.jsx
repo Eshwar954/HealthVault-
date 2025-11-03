@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/diagnosticsupload.css";
-
+const BASE_URL = import.meta.env.VITE_API_URL;
 const OtpFileUpload = () => {
   const [loginId, setLoginId] = useState("");
   const [otp, setOtp] = useState("");
@@ -37,7 +37,7 @@ const OtpFileUpload = () => {
     }
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/otp/request", {
+      const res = await axios.post(`${BASE_URL}/api/otp/request`, {
         loginId,
       });
       alert(res.data.message || "OTP sent!");
@@ -56,7 +56,7 @@ const OtpFileUpload = () => {
     }
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/otp/verify", {
+      const res = await axios.post(`${BASE_URL}/api/otp/verify`, {
         loginId,
         otp,
       });
@@ -94,7 +94,7 @@ const OtpFileUpload = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/files/diagnostic/upload",
+        `${BASE_URL}/api/files/diagnostic/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
