@@ -1,4 +1,4 @@
-const Diagnostic = require('../models/user'); // using user model
+const Diagnostic = require('../models/User'); // using user model
 
 const getDiagnostic = async (req, res) => {
   try {
