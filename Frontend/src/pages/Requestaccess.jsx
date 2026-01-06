@@ -199,7 +199,7 @@ const Requestaccess = () => {
               >
                 Upload Report
               </button>
-              <button  className="option-btn">
+              <button  className="option-btn" onClick={handleAccessRecords}>
                 Access Records
               </button>
               <button
