@@ -15,6 +15,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://healthvault-1-nim9.onrender.com",
+
 ];
 // Middleware
 app.use(express.json());

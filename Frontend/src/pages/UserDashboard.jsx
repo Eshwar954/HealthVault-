@@ -30,7 +30,7 @@ const UserDashboard = () => {
           console.error("Email not found in localStorage");
           return;
         }
-
+        
         const response = await axios.get(
           `${BASE_URL}/api/user/${storedEmail}`
         );
