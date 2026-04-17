@@ -1,30 +1,64 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "../styles/uploadfile.css"; // Ensure this file exists
+import { useNavigate } from "react-router-dom";
+import "../styles/uploadfile.css";
 const BASE_URL = import.meta.env.VITE_API_URL;
+
 const UploadFile = () => {
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
   const [doctorName, setDoctorName] = useState("");
   const [reportType, setReportType] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [isPanelOpen, setIsPanelOpen] = useState(false); // Side panel state
+  const [isUploading, setIsUploading] = useState(false);
 
-  // Ensure controlled inputs by providing empty strings as default values
-  const handleFileChange = (e) => setFile(e.target.files[0]);
+  const fetchFiles = async () => {
+    const loginId = localStorage.getItem("loginId");
+    if (!loginId) {
+      navigate("/login");
+      return;
+    }
 
-  const handleUpload = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/api/files/fetch/${loginId}`
+      );
+      setUploadedFiles(response.data.files || []);
+    } catch (error) {
+      console.error("Failed to fetch files:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFiles();
+  }, [navigate]);
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      if (!fileName) {
+        setFileName(selectedFile.name.split('.')[0]); // Default name to original filename without extension
+      }
+    }
+  };
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
     if (!file || !fileName.trim() || !doctorName.trim() || !reportType.trim()) {
-      alert("Please fill all fields");
+      alert("Please fill all fields and select a file.");
       return;
     }
 
     const loginId = localStorage.getItem("loginId");
     if (!loginId) {
-      alert("Login ID not found. Please log in.");
+      alert("Session expired. Please log in again.");
+      navigate("/login");
       return;
     }
 
+    setIsUploading(true);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("fileName", fileName);
@@ -32,210 +66,153 @@ const UploadFile = () => {
     formData.append("reportType", reportType);
     formData.append("loginId", loginId);
 
-    console.log("Uploading file:", formData.get("file"));
-    console.log("File name:", formData.get("fileName"));
-    console.log("Doctor name:", formData.get("doctorName"));
-    console.log("Report type:", formData.get("reportType"));
-
     try {
       await axios.post(`${BASE_URL}/api/files/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert("File uploaded successfully");
+      setFile(null);
+      setFileName("");
+      setDoctorName("");
+      setReportType("");
       fetchFiles();
-      setIsPanelOpen(false); // Close panel after upload
     } catch (error) {
-      console.error("Upload Error:", error.response?.data || error.message);
-      alert(`Upload failed: ${error.response?.data?.message || error.message}`);
+      console.error("Upload Error:", error);
+      alert(`Upload failed: ${error.response?.data?.message || "Internal server error"}`);
+    } finally {
+      setIsUploading(false);
     }
   };
-
-  const fetchFiles = async () => {
-    const loginId = localStorage.getItem("loginId");
-    if (!loginId) return;
-
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/api/files/fetch/${loginId}`
-      );
-      setUploadedFiles(response.data.files);
-    } catch (error) {
-      alert(
-        `Failed to fetch files: ${
-          error.response?.data?.message || error.message
-        }`
-      );
-    }
-  };
-
-  useEffect(() => {
-    fetchFiles();
-  }, []);
 
   const handleDelete = async (fileId) => {
+    if (!window.confirm("Are you sure you want to delete this file?")) return;
     try {
       await axios.delete(`${BASE_URL}/api/files/delete/${fileId}`);
-      alert("File deleted successfully");
       fetchFiles();
     } catch (error) {
-      alert(
-        `Failed to delete file: ${
-          error.response?.data?.message || error.message
-        }`
-      );
+      alert(`Failed to delete file: ${error.response?.data?.message || error.message}`);
     }
   };
 
+  const reportTypes = [
+    { group: "General Reports", options: ["General Checkup", "Prescription", "Discharge Summary", "Medical Certificate"] },
+    { group: "Lab Tests", options: ["Blood Test", "Urine Test", "Stool Test", "Liver Function Test (LFT)", "Kidney Function Test (KFT)", "Thyroid Profile", "Lipid Profile", "HbA1c (Diabetes)", "Complete Blood Count (CBC)"] },
+    { group: "Specialist Reports", options: ["Cardiology", "Neurology", "Orthopedics", "Gastroenterology", "Dermatology", "Pulmonology", "Endocrinology", "Nephrology", "Urology", "ENT (Ear, Nose, Throat)"] },
+    { group: "Imaging & Diagnostics", options: ["X-Ray", "MRI", "CT Scan", "Ultrasound", "Echocardiogram (ECHO)", "ECG", "EEG", "PET Scan", "Mammogram"] },
+    { group: "Miscellaneous", options: ["Vaccination Record", "Allergy Test", "Mental Health Evaluation", "Vision Test", "Hearing Test", "Dental Report", "Gynecology", "Pediatrics"] }
+  ];
+
   return (
-    <div className="upload-container">
-      {/* Upload Button */}
-      <div className="upload-header">
-        <h2>Upload Medical Reports</h2>
-        <button className="open-panel-btn" onClick={() => setIsPanelOpen(true)}>
-          Upload
-        </button>
-      </div>
+    <div className="upload-dashboard">
+      {/* Upload Form Card */}
+      <section className="upload-card">
+        <h2>Upload Medical Report</h2>
+        <form className="upload-form" onSubmit={handleUpload}>
+          <div className="form-group">
+            <label>File Name</label>
+            <input
+              type="text"
+              placeholder="e.g., CBC Blood Test Jan 2026"
+              value={fileName}
+              onChange={(e) => setFileName(e.target.value)}
+              required
+            />
+          </div>
 
-      {/* Sliding Panel */}
-      <div className={`side-panel ${isPanelOpen ? "open" : ""}`}>
-        <button
-          className="close-panel-btn"
-          onClick={() => setIsPanelOpen(false)}
-        >
-          ✖
-        </button>
-        <h3>Upload Report</h3>
-        <input
-          type="text"
-          placeholder="File Name"
-          value={fileName || ""}
-          onChange={(e) => setFileName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Doctor's Name"
-          value={doctorName || ""}
-          onChange={(e) => setDoctorName(e.target.value)}
-        />
-        <select
-          value={reportType || ""}
-          onChange={(e) => setReportType(e.target.value)}
-        >
-          <option value="">Select Report Type</option>
+          <div className="form-group">
+            <label>Prescribing Doctor</label>
+            <input
+              type="text"
+              placeholder="Dr. John Doe"
+              value={doctorName}
+              onChange={(e) => setDoctorName(e.target.value)}
+              required
+            />
+          </div>
 
-          {/* General */}
-          <option value="General Checkup">General Checkup</option>
-          <option value="Prescription">Prescription</option>
-          <option value="Discharge Summary">Discharge Summary</option>
-          <option value="Medical Certificate">Medical Certificate</option>
+          <div className="form-group">
+            <label>Report Type</label>
+            <select
+              value={reportType}
+              onChange={(e) => setReportType(e.target.value)}
+              required
+            >
+              <option value="">Select Report Type</option>
+              {reportTypes.map((group, idx) => (
+                <optgroup key={idx} label={group.group}>
+                  {group.options.map((opt, i) => (
+                    <option key={i} value={opt}>{opt}</option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+          </div>
 
-          {/* Lab Tests */}
-          <option value="Blood Test">Blood Test</option>
-          <option value="Urine Test">Urine Test</option>
-          <option value="Stool Test">Stool Test</option>
-          <option value="Liver Function Test (LFT)">
-            Liver Function Test (LFT)
-          </option>
-          <option value="Kidney Function Test (KFT)">
-            Kidney Function Test (KFT)
-          </option>
-          <option value="Thyroid Profile">Thyroid Profile</option>
-          <option value="Lipid Profile">Lipid Profile</option>
-          <option value="HbA1c (Diabetes)">HbA1c (Diabetes)</option>
-          <option value="Complete Blood Count (CBC)">
-            Complete Blood Count (CBC)
-          </option>
+          <div className="form-group">
+            <label>Select File</label>
+            <div className="file-input-wrapper">
+              <input type="file" onChange={handleFileChange} required={!file} />
+              <span className="file-input-btn">
+                {file ? file.name : "Choose a file or drag it here"}
+              </span>
+            </div>
+          </div>
 
-          {/* Specialist Reports */}
-          <option value="Cardiology">Cardiology</option>
-          <option value="Neurology">Neurology</option>
-          <option value="Orthopedics">Orthopedics</option>
-          <option value="Gastroenterology">Gastroenterology</option>
-          <option value="Dermatology">Dermatology</option>
-          <option value="Pulmonology">Pulmonology</option>
-          <option value="Endocrinology">Endocrinology</option>
-          <option value="Nephrology">Nephrology</option>
-          <option value="Urology">Urology</option>
-          <option value="ENT (Ear, Nose, Throat)">
-            ENT (Ear, Nose, Throat)
-          </option>
-
-          {/* Imaging & Diagnostics */}
-          <option value="X-Ray">X-Ray</option>
-          <option value="MRI">MRI</option>
-          <option value="CT Scan">CT Scan</option>
-          <option value="Ultrasound">Ultrasound</option>
-          <option value="Echocardiogram (ECHO)">Echocardiogram (ECHO)</option>
-          <option value="ECG">ECG</option>
-          <option value="EEG">EEG</option>
-          <option value="PET Scan">PET Scan</option>
-          <option value="Mammogram">Mammogram</option>
-
-          {/* Miscellaneous */}
-          <option value="Vaccination Record">Vaccination Record</option>
-          <option value="Allergy Test">Allergy Test</option>
-          <option value="Mental Health Evaluation">
-            Mental Health Evaluation
-          </option>
-          <option value="Vision Test">Vision Test</option>
-          <option value="Hearing Test">Hearing Test</option>
-          <option value="Dental Report">Dental Report</option>
-          <option value="Gynecology">Gynecology</option>
-          <option value="Pediatrics">Pediatrics</option>
-        </select>
-
-        <input type="file" onChange={handleFileChange} />
-        <button type="button" onClick={handleUpload}>
-          Submit
-        </button>
-      </div>
+          <button type="submit" className="submit-btn" disabled={isUploading}>
+            {isUploading ? "Uploading..." : "Upload File"}
+          </button>
+        </form>
+      </section>
 
       {/* Recent Files Table */}
-      <div className="recent-files">
-        <h3>Recent Files</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>File Name</th>
-              <th>Report Type</th>
-              <th>Doctor</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {uploadedFiles.map((file) => (
-              <tr key={file._id}>
-                <td>{file.fileName}</td>
-                <td>{file.reportType}</td>
-                <td>{file.doctorName}</td>
-                <td>
-                  <a
-                    href={file.fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="view-link"
-                  >
-                    VIEW
-                  </a>
-                  <button
-                    onClick={() => handleDelete(file._id)}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      fontSize: "1.2rem",
-                      color: "#dc3545",
-                      cursor: "pointer",
-                      marginLeft: "1rem",
-                    }}
-                  >
-                    <i className="fas fa-trash-alt"></i>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <section className="recent-files-card">
+        <h3>My Uploaded Files</h3>
+        
+        {uploadedFiles.length === 0 ? (
+          <div className="empty-state">
+            <p>No files uploaded yet.</p>
+          </div>
+        ) : (
+          <div className="table-responsive">
+            <table className="recent-files-table">
+              <thead>
+                <tr>
+                  <th>File Name</th>
+                  <th>Type</th>
+                  <th>Doctor</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {uploadedFiles.map((f) => (
+                  <tr key={f._id}>
+                    <td>{f.fileName}</td>
+                    <td>{f.reportType}</td>
+                    <td>{f.doctorName}</td>
+                    <td className="action-links">
+                      <a
+                        href={f.fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="view-link"
+                      >
+                        View
+                      </a>
+                      <button
+                        onClick={() => handleDelete(f._id)}
+                        className="delete-btn"
+                        title="Delete File"
+                      >
+                        ✖
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
     </div>
   );
 };

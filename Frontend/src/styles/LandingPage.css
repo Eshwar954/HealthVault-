@@ -58,7 +58,7 @@
   transition: all 0.2s;
 }
 .landing-page .hv-card:hover{ transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.landing-page .hv-chip{ display:inline-block; padding:6px 12px; background:#f0f7ff; color:var(--hv-primary); border-radius:999px; font-weight:600; font-size:.85rem }
+.landing-page .hv-chip{ display:inline-block; padding:6px 12px; background:#f0fdfa; color:var(--hv-primary); border-radius:999px; font-weight:600; font-size:.85rem }
 
 /* Steps */
 .landing-page .hv-steps{ counter-reset:step; list-style:none; padding-left:0 }

@@ -30,7 +30,7 @@
   
   /* ===== LEFT SECTION ===== */
   .reg-pro-left {
-    background: #004aad;
+    background: #0f766e;
     padding: 4rem;
     color: #fff;
     display: flex;
@@ -71,23 +71,23 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border: 2px solid var(--accent, #6366f1);
+    border: 2px solid var(--accent, #0f766e);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    color: var(--accent, #6366f1);
+    color: var(--accent, #0f766e);
     background: transparent;
     transition: 0.3s ease;
   }
   .step-indicator span.active {
-    background: var(--accent, #6366f1);
+    background: var(--accent, #0f766e);
     color: #fff;
   }
   .step-indicator .line {
     height: 2px;
     width: 40px;
-    background: var(--accent, #6366f1);
+    background: var(--accent, #0f766e);
     opacity: 0.4;
   }
   
@@ -117,8 +117,8 @@
   .reg-pro-form input:focus,
   .reg-pro-form select:focus {
     outline: none;
-    border-color: #004aad;
-    box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.1);
+    border-color: #0f766e;
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
   }
   
   /* Step Animation */
@@ -151,7 +151,7 @@
   }
   
   .next-btn, .reg-pro-btn {
-    background: #004aad;
+    background: #0f766e;
     color: #fff;
   }
   
@@ -162,7 +162,7 @@
   }
   
   .next-btn:hover, .reg-pro-btn:hover {
-    background: #003b8a;
+    background: #115e59;
     transform: translateY(-1px);
   }
   

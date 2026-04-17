@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/diagnosticsupload.css";
 const BASE_URL = import.meta.env.VITE_API_URL;
+
 const OtpFileUpload = () => {
   const [loginId, setLoginId] = useState("");
   const [otp, setOtp] = useState("");
@@ -75,8 +76,10 @@ const OtpFileUpload = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    setFile(selectedFile);
-    setFileName(selectedFile ? selectedFile.name : "Choose a file...");
+    if (selectedFile) {
+      setFile(selectedFile);
+      setFileName(selectedFile.name);
+    }
   };
 
   const handleUpload = async () => {
@@ -108,7 +111,7 @@ const OtpFileUpload = () => {
       };
 
       setUploadedFiles((prev) => [...prev, uploadedFileInfo]);
-      alert("File uploaded!");
+      alert("File uploaded successfully!");
       setFile(null);
       setFileName("Choose a file...");
       setDoctorName("");
@@ -145,125 +148,148 @@ const OtpFileUpload = () => {
   ];
 
   return (
-    <div className="otp-upload-container">
-      <div className={`otp-upload-card ${verified ? 'otp-upload-verified' : ''}`}>
-        <h2>Diagnostic File Upload</h2>
+    <div className="diagnostic-upload-dashboard">
+      <section className={`diag-card ${verified ? 'verified' : ''}`}>
+        
+        <header className="diag-header">
+          <h2>Diagnostic File Upload</h2>
+          <p>Securely upload records directly to patient profiles.</p>
+        </header>
 
         {!verified && !sessionExpired && (
-          <div className="otp-upload-input-group">
-            <input
-              type="text"
-              placeholder="User Login ID"
-              value={loginId}
-              onChange={(e) => setLoginId(e.target.value)}
-              disabled={loading}
-              className="otp-upload-input-field"
-            />
-            {!otpSent ? (
-              <button
-                onClick={handleSendOtp}
-                disabled={loading}
-                className="otp-upload-primary-btn"
-              >
-                {loading ? "Sending OTP..." : "Send OTP"}
-              </button>
-            ) : (
-              <div className="otp-upload-otp-verify-section">
+          <div className="diag-form">
+            <div className="form-group">
+              <label>Patient Login ID</label>
+              <div className="otp-row">
                 <input
                   type="text"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  disabled={loading}
-                  className="otp-upload-input-field"
+                  placeholder="e.g. USR123"
+                  value={loginId}
+                  onChange={(e) => setLoginId(e.target.value)}
+                  disabled={loading || otpSent}
                 />
-                <button
-                  onClick={handleVerifyOtp}
-                  disabled={loading}
-                  className="otp-upload-primary-btn"
-                >
-                  {loading ? "Verifying..." : "Verify OTP"}
-                </button>
+                {!otpSent ? (
+                  <button
+                    onClick={handleSendOtp}
+                    disabled={loading || !loginId}
+                    className="btn-primary"
+                  >
+                    {loading ? "Sending..." : "Send OTP"}
+                  </button>
+                ) : (
+                  <button className="btn-secondary" disabled>OTP Sent</button>
+                )}
+              </div>
+            </div>
+
+            {otpSent && (
+              <div className="form-group">
+                <label>Verification OTP</label>
+                <div className="otp-row">
+                  <input
+                    type="text"
+                    placeholder="Enter OTP"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    disabled={loading}
+                  />
+                  <button
+                    onClick={handleVerifyOtp}
+                    disabled={loading || !otp}
+                    className="btn-primary"
+                  >
+                    {loading ? "Verifying..." : "Verify OTP"}
+                  </button>
+                </div>
               </div>
             )}
           </div>
         )}
 
         {verified && !sessionExpired && (
-          <div className="otp-upload-upload-section">
-            <div className="otp-upload-session-status">
-              Session Active (Expires in 15 mins) — Login ID: {loginId}
+          <div className="diag-form">
+            <div className="session-badge">
+              ✓ Session Active for {loginId} (Expires in 15 mins)
             </div>
-            <div className="otp-upload-input-group">
+
+            <div className="form-group">
+              <label>Diagnostic Center Name</label>
               <input
                 type="text"
-                placeholder="Doctor Name"
-                value={doctorName}
-                onChange={(e) => setDoctorName(e.target.value)}
-                disabled={loading}
-                className="otp-upload-input-field"
-              />
-              <input
-                type="text"
-                placeholder="Diagnostic Center Name"
+                placeholder="e.g. City Central Labs"
                 value={diagnosticCenterName}
                 onChange={(e) => setDiagnosticCenterName(e.target.value)}
                 disabled={loading}
-                className="otp-upload-input-field"
               />
+            </div>
+
+            <div className="form-group">
+              <label>Prescribing Doctor (Optional)</label>
+              <input
+                type="text"
+                placeholder="Doctor's Name"
+                value={doctorName}
+                onChange={(e) => setDoctorName(e.target.value)}
+                disabled={loading}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Report Type</label>
               <select
                 value={reportType}
                 onChange={(e) => setReportType(e.target.value)}
                 disabled={loading}
-                className="otp-upload-select-field"
               >
                 <option value="">Select Report Type</option>
                 {reportTypes.map((group, index) => (
                   <optgroup key={index} label={group.group}>
                     {group.options.map((type, idx) => (
-                      <option key={idx} value={type}>
-                        {type}
-                      </option>
+                      <option key={idx} value={type}>{type}</option>
                     ))}
                   </optgroup>
                 ))}
               </select>
-              <div className="otp-upload-file-input-wrapper">
+            </div>
+
+            <div className="form-group">
+              <label>Select File</label>
+              <div className="file-input-wrapper">
                 <input
                   type="file"
                   onChange={handleFileChange}
                   disabled={loading}
-                  id="otp-upload-file-upload"
                 />
-                <label htmlFor="otp-upload-file-upload" className="otp-upload-file-input-label">
+                <span className="file-input-btn">
                   {fileName}
-                </label>
-              </div>
-              <div className="otp-upload-button-group">
-                <button
-                  onClick={handleUpload}
-                  disabled={loading}
-                  className="otp-upload-primary-btn"
-                >
-                  {loading ? "Uploading..." : "Upload File"}
-                </button>
-                <button
-                  onClick={handleEndSession}
-                  className="otp-upload-secondary-btn"
-                >
-                  End Session
-                </button>
+                </span>
               </div>
             </div>
 
+            <div className="action-row">
+              <button
+                onClick={handleUpload}
+                disabled={loading}
+                className="btn-primary"
+              >
+                {loading ? "Uploading..." : "Upload File"}
+              </button>
+              <button
+                onClick={handleEndSession}
+                className="btn-secondary"
+              >
+                End Session
+              </button>
+            </div>
+
             {uploadedFiles.length > 0 && (
-              <div className="otp-upload-uploaded-files-list">
-                <h4>Uploaded Files</h4>
+              <div className="uploaded-list">
+                <h4>Recently Uploaded</h4>
                 <ul>
-                  {uploadedFiles.map((file, index) => (
-                    <li key={index} className="otp-upload-file-item">
-                      <strong>{file.name}</strong>
-                      <span>Uploaded at {file.uploadedAt}</span>
+                  {uploadedFiles.map((f, index) => (
+                    <li key={index} className="uploaded-item">
+                      <strong>{f.name}</strong>
+                      <span>{f.uploadedAt}</span>
                     </li>
                   ))}
                 </ul>
@@ -271,7 +297,7 @@ const OtpFileUpload = () => {
             )}
           </div>
         )}
-      </div>
+      </section>
     </div>
   );
 };

@@ -8,7 +8,7 @@
 .app-navbar .navbar-brand {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #004aad !important;
+  color: #0f766e !important;
   letter-spacing: -0.025em;
 }
 
@@ -22,7 +22,7 @@
 
 .app-navbar .nav-link:hover,
 .app-navbar .nav-link.active {
-  color: #004aad !important;
+  color: #0f766e !important;
 }
 
 .app-navbar .btn {
@@ -32,13 +32,13 @@
 }
 
 .app-navbar .btn-primary {
-  background: #004aad;
-  border-color: #004aad;
+  background: #0f766e;
+  border-color: #0f766e;
 }
 
 .app-navbar .btn-primary:hover {
-  background: #003b8a;
-  border-color: #003b8a;
+  background: #115e59;
+  border-color: #115e59;
   transform: translateY(-1px);
 }
 
