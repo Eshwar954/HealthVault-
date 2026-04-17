@@ -2,16 +2,16 @@
 
 HealthVault is a secure, digital health record management system designed for patients, doctors, and diagnostic centers. It streamlines the process of uploading, sharing, and searching medical records, ensuring that critical health information is always at your fingertips.
 
-## 🚀 Key Features
+## Key Features
 
 - **For Patients:** Securely upload and organize medical reports, prescriptions, and bills. Share records with doctors via time-bound, secure links.
 - **For Doctors:** Instant access to patient medical history, enabling faster and more accurate consultations.
 - **For Diagnostic Centers:** Paperless report delivery. Upload results directly to patient profiles, reducing manual follow-ups and physical paperwork.
-- **🔒 Security First:** 256-bit encryption for data at rest and in transit. Role-based access control (RBAC) ensures your data is only seen by those you authorize.
-- **⚡ Smart Search:** Quickly find specific records by date, type, or tags.
-- **📱 Mobile Responsive:** Accessible on any device, from desktop to mobile.
+- **Security First:** 256-bit encryption for data at rest and in transit. Role-based access control (RBAC) ensures your data is only seen by those you authorize.
+- **Smart Search:** Quickly find specific records by date, type, or tags.
+- **Mobile Responsive:** Accessible on any device, from desktop to mobile.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend:** React.js, Vite, Bootstrap, CSS3 (Vanilla)
 - **Backend:** Node.js, Express.js
@@ -19,7 +19,7 @@ HealthVault is a secure, digital health record management system designed for pa
 - **Cloud Storage:** Cloudinary (for secure file storage)
 - **Authentication:** JWT-based secure sessions
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 ├── backend/            # Express server, API routes, and models
@@ -35,7 +35,7 @@ HealthVault is a secure, digital health record management system designed for pa
     │   └── assets/     # Images and icons
 ```
 
-## ⚙️ Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -86,10 +86,10 @@ HealthVault is a secure, digital health record management system designed for pa
    npm run dev
    ```
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License.
