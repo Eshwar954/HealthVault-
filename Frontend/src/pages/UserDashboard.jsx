@@ -29,7 +29,7 @@ const UserDashboard = () => {
       try {
         const storedEmail = localStorage.getItem("email");
         if (!storedEmail) {
-          navigate("/UserLogin");
+          navigate("/login");
           return;
         }
         

@@ -12,7 +12,6 @@ const LandingPage = () => {
     <main className="landing-page">
       {/* ===== HERO ===== */}
       <header id="home" className="container position-relative hv-hero py-5 py-lg-6">
-        <div className="hv-gradient" aria-hidden="true" />
         <div className="row align-items-center g-5">
           <div className="col-lg-6">
             <span className="badge rounded-pill hv-badge">New • Smarter sharing</span>
@@ -26,7 +25,7 @@ const LandingPage = () => {
             </p>
 
             <div className="d-flex flex-wrap gap-3 mt-4">
-              <Link className="btn hv-btn-primary btn-lg px-4" to="/UserLogin">
+              <Link className="btn hv-btn-primary btn-lg px-4" to="/login">
                 Create free account
               </Link>
               <a className="btn hv-btn-ghost btn-lg px-4" href="#features">
@@ -42,7 +41,6 @@ const LandingPage = () => {
           </div>
 
           <div className="col-lg-6 position-relative">
-            <div className="hv-blob" aria-hidden="true" />
             <div className="hv-hero-card glass shadow-lg p-3 p-md-4">
               <img
                 src={Image1}
@@ -109,7 +107,7 @@ const LandingPage = () => {
               <li><strong>Share</strong> time-bound links with doctors/labs. Revoke access anytime.</li>
             </ol>
             <div className="d-flex gap-3 mt-4">
-              <Link className="btn hv-btn-primary" to="/UserLogin">Try it now</Link>
+              <Link className="btn hv-btn-primary" to="/login">Try it now</Link>
               <a className="btn hv-btn-ghost" href="#faq">Read FAQ</a>
             </div>
           </div>
@@ -145,11 +143,7 @@ const LandingPage = () => {
             <p className="mb-0 text-secondary">Free for individuals. Simple plans for clinics and labs.</p>
           </div>
           <div className="text-md-end">
-            <Link className="btn hv-btn-primary btn-lg mt-3 mt-md-0" to="/UserLogin">Get Started</Link>
-            <div className="d-flex flex-wrap gap-2 mt-3 justify-content-md-end">
-              <Link className="btn btn-outline-primary" to="/DoctorLogin">I’m a Doctor</Link>
-              <Link className="btn btn-outline-primary" to="/DiagnosticLogin">I’m a Diagnostic Center</Link>
-            </div>
+            <Link className="btn hv-btn-primary btn-lg mt-3 mt-md-0 px-5" to="/login">Get Started</Link>
           </div>
         </div>
       </section>

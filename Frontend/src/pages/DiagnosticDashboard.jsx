@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/UserDashboard.css";
 
+import { useNavigate } from "react-router-dom";
+
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 const DiagnosticDashboard = () => {
+  const navigate = useNavigate();
   const [diagnosticData, setDiagnosticData] = useState({
     loginId: "",
     name: "",
@@ -22,7 +25,7 @@ const DiagnosticDashboard = () => {
       try {
         const storedEmail = localStorage.getItem("email");
         if (!storedEmail) {
-          console.error("Email not found in localStorage");
+          navigate("/login");
           return;
         }
 

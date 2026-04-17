@@ -1,27 +1,56 @@
-/* Single, enhanced Navbar (scoped) */
-.app-navbar.navbar{
-  position:sticky; top:0; z-index:50;
-  background:var(--surface);
-  border-bottom:1px solid var(--border);
-  box-shadow: var(--shadow-sm);
+.app-navbar {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.75rem 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
-.app-navbar .navbar-brand{ font-size:1.6rem; color:var(--brand-700); font-weight:900 }
-.app-navbar .navbar-brand:hover{ color:var(--brand-600) }
-.app-navbar .navbar-nav{ display:flex; gap:8px; justify-content:space-evenly }
-.app-navbar .nav-link{ color:var(--text); font-size:1.05rem; font-weight:600; position:relative; padding:10px 14px; margin:14px; transition:color .2s }
-.app-navbar .nav-link::after{ content:""; position:absolute; bottom:0; left:50%; width:0; height:2px; background:var(--brand-700); transition:width .25s, left .25s }
-.app-navbar .nav-link:hover{ color:var(--brand-700) }
-.app-navbar .nav-link:hover::after{ left:0; width:100% }
-.app-navbar .nav-link.active{ color:var(--brand-700); font-weight: 700; }
-.app-navbar .login-btn{
-  background:var(--brand-700);
-  color:#fff; padding:10px 24px; font-weight:800; border:1px solid var(--brand-700); border-radius:var(--r-md); transition:all .2s ease;
+
+.app-navbar .navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #004aad !important;
+  letter-spacing: -0.025em;
 }
-.app-navbar .login-btn:hover{ background: var(--brand-600); transform:translateY(-1px); box-shadow: var(--shadow-md); }
-.app-navbar .dropdown-menu{ border-radius:var(--r-md); border:1px solid var(--border); box-shadow:var(--shadow-lg); background: var(--surface); }
-.app-navbar .dropdown-item{ padding:12px 18px; font-size:1rem; color: var(--text); transition: background .2s }
-.app-navbar .dropdown-item:hover{ background:var(--brand-50); color:var(--brand-700); }
-@media (max-width:768px){
-  .app-navbar .navbar-nav{ text-align:center }
-  .app-navbar .navbar-nav .nav-item{ margin-bottom:10px }
+
+.app-navbar .nav-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #64748b !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s;
+}
+
+.app-navbar .nav-link:hover,
+.app-navbar .nav-link.active {
+  color: #004aad !important;
+}
+
+.app-navbar .btn {
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.app-navbar .btn-primary {
+  background: #004aad;
+  border-color: #004aad;
+}
+
+.app-navbar .btn-primary:hover {
+  background: #003b8a;
+  border-color: #003b8a;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 991.98px) {
+  .app-navbar .navbar-nav {
+    padding: 1rem 0;
+  }
+  .app-navbar .nav-link {
+    padding: 0.75rem 0 !important;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .app-navbar .nav-item:last-child .nav-link {
+    border-bottom: none;
+  }
 }

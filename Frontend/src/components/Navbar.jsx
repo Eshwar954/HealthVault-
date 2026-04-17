@@ -7,46 +7,36 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // normalize role
   const rawRole = localStorage.getItem("role");
   const role = (rawRole || "").toLowerCase().trim();
   const isLoggedIn = !!role;
 
-  // redirect once from "/" only
-  useEffect(() => {
-    if (location.pathname === "/" && !sessionStorage.getItem("redirected")) {
-      if (role === "user") navigate("/user/dashboard");
-      else if (role === "doctor") navigate("/doctor/dashboard");
-      else if (role === "diagnostic center" || role === "diagnostic")
-        navigate("/diagnostic/dashboard");
-      sessionStorage.setItem("redirected", "true");
-    }
-  }, [role, navigate, location.pathname]);
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("email");
     localStorage.removeItem("userId");
+    localStorage.removeItem("loginId");
     sessionStorage.removeItem("redirected");
     setIsNavOpen(false);
-    setIsDropdownOpen(false);
     navigate("/");
   };
 
   const isActive = (path) => (location.pathname === path ? "active" : "");
 
   return (
-    <nav className="navbar navbar-expand-lg bg-light app-navbar">
-      <div className="container px-5">
+    <nav className="navbar navbar-expand-lg bg-white app-navbar border-bottom sticky-top">
+      <div className="container">
         {/* Brand */}
-        <Link to="/" className="navbar-brand" onClick={() => setIsNavOpen(false)}>HealthVault</Link>
+        <Link to="/" className="navbar-brand fw-bold text-primary" onClick={() => setIsNavOpen(false)}>
+          HealthVault
+        </Link>
 
         {/* Toggler */}
         <button
-          className="navbar-toggler"
+          className="navbar-toggler border-0 shadow-none"
           type="button"
           onClick={() => setIsNavOpen(!isNavOpen)}
           aria-expanded={isNavOpen}
@@ -55,9 +45,9 @@ const Navbar = () => {
           <span className="navbar-toggler-icon" />
         </button>
 
-        {/* Center links */}
-        <div className={`collapse navbar-collapse justify-content-center ${isNavOpen ? 'show' : ''}`} id="hvNav">
-          <ul className="navbar-nav">
+        {/* Links & Auth */}
+        <div className={`collapse navbar-collapse ${isNavOpen ? 'show' : ''}`} id="hvNav">
+          <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             {!isLoggedIn ? (
               <>
                 <li className="nav-item">
@@ -69,82 +59,56 @@ const Navbar = () => {
                 <li className="nav-item">
                   <a href="/#how" className="nav-link" onClick={() => setIsNavOpen(false)}>How it works</a>
                 </li>
-                <li className="nav-item">
-                  <Link to="/register" className={`nav-link ${isActive("/register")}`} onClick={() => setIsNavOpen(false)}>Register</Link>
-                </li>
               </>
             ) : role === "user" ? (
               <>
                 <li className="nav-item">
-                  <Link to="/user/dashboard" className={`nav-link ${isActive("/user/dashboard")}`} onClick={() => setIsNavOpen(false)}>Profile</Link>
+                  <Link to="/user/dashboard" className={`nav-link ${isActive("/user/dashboard")}`} onClick={() => setIsNavOpen(false)}>Dashboard</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/user/uploads" className={`nav-link ${isActive("/user/uploads")}`} onClick={() => setIsNavOpen(false)}>Uploads</Link>
+                  <Link to="/user/files" className={`nav-link ${isActive("/user/files")}`} onClick={() => setIsNavOpen(false)}>My Files</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/user/files" className={`nav-link ${isActive("/user/files")}`} onClick={() => setIsNavOpen(false)}>Files</Link>
+                  <Link to="/user/uploads" className={`nav-link ${isActive("/user/uploads")}`} onClick={() => setIsNavOpen(false)}>Upload</Link>
                 </li>
               </>
             ) : role === "doctor" ? (
               <>
                 <li className="nav-item">
-                  <Link to="/doctor/dashboard" className={`nav-link ${isActive("/doctor/dashboard")}`} onClick={() => setIsNavOpen(false)}>Doctor Dashboard</Link>
+                  <Link to="/doctor/dashboard" className={`nav-link ${isActive("/doctor/dashboard")}`} onClick={() => setIsNavOpen(false)}>Dashboard</Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/requestaccess" className={`nav-link ${isActive("/requestaccess")}`} onClick={() => setIsNavOpen(false)}>Request Access</Link>
                 </li>
               </>
-            ) : role === "diagnostic center" || role === "diagnostic" ? (
+            ) : (role === "diagnostic center" || role === "diagnostic") ? (
               <>
                 <li className="nav-item">
-                  <Link to="/diagnostic/dashboard" className={`nav-link ${isActive("/diagnostic/dashboard")}`} onClick={() => setIsNavOpen(false)}>Diagnostic Dashboard</Link>
+                  <Link to="/diagnostic/dashboard" className={`nav-link ${isActive("/diagnostic/dashboard")}`} onClick={() => setIsNavOpen(false)}>Dashboard</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/diagnostic/upload" className={`nav-link ${isActive("/diagnostic/upload")}`} onClick={() => setIsNavOpen(false)}>Upload Reports</Link>
+                  <Link to="/diagnostic/upload" className={`nav-link ${isActive("/diagnostic/upload")}`} onClick={() => setIsNavOpen(false)}>Upload Results</Link>
                 </li>
               </>
             ) : null}
           </ul>
-        </div>
 
-        {/* Right: auth */}
-        <div className="nav-item position-relative d-none d-lg-block">
-          {isLoggedIn ? (
-            <button className="btn btn-outline-danger" onClick={handleLogout}>
-              Logout
-            </button>
-          ) : (
-            <div className="dropdown">
-              <button
-                className="btn login-btn dropdown-toggle"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                aria-expanded={isDropdownOpen}
-              >
-                Login
+          <div className="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+            {isLoggedIn ? (
+              <button className="btn btn-outline-danger btn-sm px-4 rounded-pill" onClick={handleLogout}>
+                Logout
               </button>
-              <ul className={`dropdown-menu dropdown-menu-end ${isDropdownOpen ? 'show' : ''}`} style={{position: 'absolute'}}>
-                <li><Link to="/UserLogin" className="dropdown-item" onClick={() => setIsDropdownOpen(false)}>User Login</Link></li>
-                <li><Link to="/Doctorlogin" className="dropdown-item" onClick={() => setIsDropdownOpen(false)}>Doctor Login</Link></li>
-                <li><Link to="/Diagnosticlogin" className="dropdown-item" onClick={() => setIsDropdownOpen(false)}>Diagnostic Center Login</Link></li>
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {/* Mobile auth */}
-        <div className="d-lg-none w-100 mt-3 text-center">
-           {isNavOpen && !isLoggedIn && (
-             <div className="d-flex flex-column gap-2">
-                <Link to="/UserLogin" className="btn btn-outline-primary w-100" onClick={() => setIsNavOpen(false)}>User Login</Link>
-                <Link to="/Doctorlogin" className="btn btn-outline-primary w-100" onClick={() => setIsNavOpen(false)}>Doctor Login</Link>
-                <Link to="/Diagnosticlogin" className="btn btn-outline-primary w-100" onClick={() => setIsNavOpen(false)}>Diagnostic Center Login</Link>
-             </div>
-           )}
-           {isNavOpen && isLoggedIn && (
-             <button className="btn btn-danger w-100 mt-2" onClick={handleLogout}>
-              Logout
-            </button>
-           )}
+            ) : (
+              <>
+                <Link to="/login" className="btn btn-primary btn-sm px-4 rounded-pill" onClick={() => setIsNavOpen(false)}>
+                  Login
+                </Link>
+                <Link to="/register" className="btn btn-outline-primary btn-sm px-4 rounded-pill d-none d-sm-inline-block" onClick={() => setIsNavOpen(false)}>
+                  Register
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </nav>

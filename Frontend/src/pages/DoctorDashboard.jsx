@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/doctordashboard.css";
+import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 const DoctorDashboard = () => {
+  const navigate = useNavigate();
   const [doctorData, setDoctorData] = useState(null);
   const [formData, setFormData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -12,7 +14,10 @@ const DoctorDashboard = () => {
     const fetchDoctorData = async () => {
       try {
         const storedEmail = localStorage.getItem("email");
-        if (!storedEmail) return;
+        if (!storedEmail) {
+          navigate("/login");
+          return;
+        }
         const encodedEmail = encodeURIComponent(storedEmail);
         const res = await axios.get(
           `${BASE_URL}/api/doctors/${encodedEmail}`
