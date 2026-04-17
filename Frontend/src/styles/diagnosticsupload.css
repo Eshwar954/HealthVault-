@@ -1,35 +1,36 @@
 /* Enhanced Diagnostics Upload (OTP + upload flow) */
 .otp-upload-container{
   min-height:100vh; display:flex; align-items:center; justify-content:center;
-  background:var(--bg, #f5f7fa); padding:20px;
+  background:var(--bg); padding:20px;
 }
 .otp-upload-card{
-  background:var(--surface, #fff); color:var(--text, #0f172a);
-  padding:28px; border-radius:var(--r-xl, 12px); width:100%; max-width:640px;
-  border:1px solid var(--border, #e5eaf2); box-shadow:var(--shadow-lg, 0 6px 15px rgba(0,0,0,.1)); transition:.25s ease;
+  background:var(--surface); color:var(--text);
+  padding:28px; border-radius:var(--r-lg); width:100%; max-width:640px;
+  border:1px solid var(--border); box-shadow:var(--shadow-lg); transition:all .25s ease;
 }
 .otp-upload-card:hover{ transform: translateY(-2px) }
-.otp-upload-verified{ border:2px solid var(--brand-500, #3b82f6) }
-.otp-upload-card h2{ text-align:center; margin-bottom:16px; font-size:28px; color:var(--text, #333) }
+.otp-upload-verified{ border:2px solid var(--brand-700) }
+.otp-upload-card h2{ text-align:center; margin-bottom:16px; font-size:28px; color:var(--text); font-weight: 900; }
 .otp-upload-input-group{ display:flex; flex-direction:column; gap:14px }
 .otp-upload-input-field, .otp-upload-select-field{
-  padding:12px; border:1px solid var(--border, #ccc); border-radius:12px;
-  background:var(--surface-2, #fff); color:var(--text, #0f172a); transition:border-color .2s, box-shadow .2s;
+  padding:12px; border:1px solid var(--border); border-radius:var(--r-md);
+  background:var(--surface-2); color:var(--text); transition:all .2s;
 }
-.otp-upload-input-field:focus, .otp-upload-select-field:focus{ border-color:var(--brand-400, #60a5fa); box-shadow:var(--ring, 0 0 0 3px rgba(59,130,246,.35)) }
+.otp-upload-input-field:focus, .otp-upload-select-field:focus{ border-color:var(--brand-700); box-shadow:var(--ring); outline: none; }
 .otp-upload-primary-btn, .otp-upload-secondary-btn{
-  padding:12px; border:none; border-radius:12px; font-weight:700; cursor:pointer; transition:filter .2s, transform .15s; box-shadow:var(--shadow-sm, 0 4px 12px rgba(0,0,0,.08));
+  padding:12px; border:none; border-radius:var(--r-md); font-weight:700; cursor:pointer; transition:all .2s ease; box-shadow:var(--shadow-sm);
 }
-.otp-upload-primary-btn{ background:linear-gradient(135deg, var(--brand-500, #007bff), var(--brand-600, #0056b3)); color:#fff }
-.otp-upload-primary-btn:hover{ filter:brightness(1.03); transform:translateY(-1px) }
-.otp-upload-secondary-btn{ background:linear-gradient(135deg, #ef4444, #dc2626); color:#fff }
-.otp-upload-secondary-btn:hover{ filter:brightness(1.03); transform:translateY(-1px) }
+.otp-upload-primary-btn{ background:var(--brand-700); color:#fff; border: 1px solid var(--brand-700); }
+.otp-upload-primary-btn:hover{ background: var(--brand-600); transform:translateY(-1px); box-shadow: var(--shadow-md); }
+.otp-upload-secondary-btn{ background:#ef4444; color:#fff; border: 1px solid #ef4444; }
+.otp-upload-secondary-btn:hover{ background: #dc2626; transform:translateY(-1px); box-shadow: var(--shadow-md); }
 .otp-upload-session-status{ margin-bottom:10px; font-weight:800; color:#22c55e }
 .otp-upload-otp-verify-section{ display:flex; flex-direction:column; gap:10px }
 .otp-upload-upload-section{ margin-top:18px }
 .otp-upload-file-input-wrapper{ position:relative; overflow:hidden }
 #otp-upload-file-upload{ position:absolute; opacity:0; width:100%; height:100%; cursor:pointer }
-.otp-upload-file-input-label{ display:block; background:var(--surface-2, #e0e0e0); padding:12px; border-radius:12px; text-align:center; font-weight:600 }
+.otp-upload-file-input-label{ display:block; background:var(--surface-2); padding:12px; border-radius:var(--r-md); text-align:center; font-weight:600; border: 1px solid var(--border); cursor: pointer; }
+.otp-upload-file-input-label:hover { background: var(--border); }
 .otp-upload-button-group{ display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between }
 .otp-upload-uploaded-files-list{ margin-top:18px }
-.otp-upload-file-item{ background:var(--surface-2, #f9f9f9); padding:10px 12px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; font-size:14px }
+.otp-upload-file-item{ background:var(--surface-2); padding:10px 12px; border-radius:var(--r-md); display:flex; justify-content:space-between; align-items:center; font-size:14px; border: 1px solid var(--border); margin-bottom: 8px; }

@@ -5,34 +5,20 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background: linear-gradient(135deg, #0ea5e9, #6366f1);
-    background-size: 400% 400%;
-    animation: bgflow 15s ease infinite;
-    font-family: "Inter", system-ui, sans-serif;
-    color: #0f172a;
+    background: var(--bg);
+    font-family: var(--font-ui);
+    color: var(--text);
     padding: 3rem 1rem 5rem;
-  }
-  
-  @keyframes bgflow {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
   }
   
   /* ===== CARD ===== */
   .docdash-card {
-    background: rgba(255, 255, 255, 0.92);
-    border-radius: 20px;
+    background: var(--surface);
+    border-radius: var(--r-lg);
     width: min(900px, 95%);
     padding: 2.5rem 3rem;
-    box-shadow: 0 25px 60px rgba(15, 23, 42, 0.2);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    animation: fadeIn 0.8s ease;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
   }
   
   /* ===== HEADER ===== */
@@ -43,10 +29,10 @@
   .docdash-header h2 {
     font-size: 2rem;
     font-weight: 900;
-    color: #0f172a;
+    color: var(--text);
   }
   .docdash-header p {
-    color: #475569;
+    color: var(--muted);
     margin-top: 0.4rem;
     font-size: 1rem;
   }
@@ -60,18 +46,18 @@
   .docdash-row {
     display: flex;
     justify-content: space-between;
-    background: #f8fafc;
-    border-radius: 12px;
+    background: var(--surface-2);
+    border-radius: var(--r-md);
     padding: 1rem 1.2rem;
-    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+    border: 1px solid var(--border);
   }
   .label {
     font-weight: 700;
-    color: #475569;
+    color: var(--muted);
   }
   .value {
     font-weight: 500;
-    color: #111827;
+    color: var(--text);
   }
   
   /* ===== BUTTONS ===== */
@@ -81,18 +67,19 @@
     margin-top: 1.8rem;
   }
   .edit-btn {
-    background: linear-gradient(135deg, #6366f1, #0ea5e9);
-    border: none;
+    background: var(--brand-700);
+    border: 1px solid var(--brand-700);
     color: #fff;
     padding: 0.9rem 2rem;
-    border-radius: 10px;
+    border-radius: var(--r-md);
     font-weight: 700;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.2s ease;
   }
   .edit-btn:hover {
+    background: var(--brand-600);
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+    box-shadow: var(--shadow-md);
   }
   
   /* ===== EDIT FORM ===== */
@@ -108,18 +95,20 @@
   }
   .input-group label {
     font-weight: 600;
-    color: #475569;
+    color: var(--muted);
   }
   .input-group input {
     padding: 0.9rem 1rem;
-    border-radius: 10px;
-    border: 1px solid rgba(15, 23, 42, 0.15);
+    border-radius: var(--r-md);
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text);
     font-size: 1rem;
-    transition: border 0.25s ease, box-shadow 0.25s ease;
+    transition: all 0.2s ease;
   }
   .input-group input:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    border-color: var(--brand-700);
+    box-shadow: var(--ring);
     outline: none;
   }
   
@@ -131,26 +120,32 @@
     margin-top: 0.5rem;
   }
   .docdash-actions .save {
-    background: linear-gradient(135deg, #111827, #1e293b);
+    background: var(--brand-700);
     color: #fff;
-    border: none;
+    border: 1px solid var(--brand-700);
     padding: 0.9rem 1.5rem;
-    border-radius: 10px;
+    border-radius: var(--r-md);
     font-weight: 700;
     cursor: pointer;
+    transition: all 0.2s ease;
   }
   .docdash-actions .cancel {
-    background: #f3f4f6;
-    color: #0f172a;
-    border: none;
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
     padding: 0.9rem 1.5rem;
-    border-radius: 10px;
+    border-radius: var(--r-md);
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.2s ease;
   }
   .docdash-actions .save:hover {
+    background: var(--brand-600);
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.25);
+    box-shadow: var(--shadow-md);
+  }
+  .docdash-actions .cancel:hover {
+    background: var(--border);
   }
   
   /* ===== FOOTER ===== */
@@ -161,23 +156,18 @@
   }
   .docdash-footer blockquote {
     font-style: italic;
-    color: #f1f5f9;
+    color: var(--muted);
     font-size: 1.1rem;
     line-height: 1.7;
   }
   
   /* ===== LOADER ===== */
   .docdash-loader {
-    color: #fff;
+    color: var(--brand-700);
     text-align: center;
     font-weight: 600;
     font-size: 1.2rem;
     padding-top: 6rem;
-    animation: pulse 1.5s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
   }
   
   /* ===== RESPONSIVE ===== */

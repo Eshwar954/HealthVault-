@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/UserDashboard.css"; // Ensure this file exists
+import { useNavigate } from "react-router-dom";
+import "../styles/UserDashboard.css";
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 const UserDashboard = () => {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     name: "",
     phone: "",
@@ -27,7 +29,7 @@ const UserDashboard = () => {
       try {
         const storedEmail = localStorage.getItem("email");
         if (!storedEmail) {
-          console.error("Email not found in localStorage");
+          navigate("/UserLogin");
           return;
         }
         
@@ -49,7 +51,7 @@ const UserDashboard = () => {
     };
 
     fetchUserData();
-  }, []);
+  }, [navigate]);
 
   // BMI Calculation
   useEffect(() => {
@@ -105,7 +107,7 @@ const UserDashboard = () => {
             {[
               ["loginId", userData.loginId],
               ["Name", userData.name],
-              ["Date of Birth", userData.dateOfBirth.slice(0, 10)],
+              ["Date of Birth", userData.dateOfBirth?.slice(0, 10)],
               ["Gender", userData.gender],
               ["Blood Type", userData.bloodType],
               ["Height", userData.height],

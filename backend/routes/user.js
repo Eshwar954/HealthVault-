@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const { updateUser } = require('../Controllers/updatecontroller');
 
 // ✅ Get user data by email
 router.get('/:email', async (req, res) => {
@@ -15,18 +16,19 @@ router.get('/:email', async (req, res) => {
   }
 });
 
-// ✅ Update user profile (excluding loginId, bmi, and password)
+// ✅ Update user profile (flexible)
+router.put('/update', updateUser);
+
+// ✅ Update user profile by email (legacy/specific)
 router.put('/update/:email', async (req, res) => {
   try {
     const { email } = req.params;
     const { loginId, password, bmi, ...updatedData } = req.body;
 
-    // Validate email
     if (!email) {
       return res.status(400).json({ message: 'Email is required' });
     }
 
-    // Calculate BMI if height and weight are provided
     if (updatedData.height && updatedData.weight) {
       updatedData.bmi = (updatedData.weight / ((updatedData.height / 100) ** 2)).toFixed(2);
     }

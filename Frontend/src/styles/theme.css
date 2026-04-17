@@ -3,25 +3,25 @@
    ========================================== */
 :root{
   /* Brand */
-  --brand-50:#eef6ff; --brand-100:#dbeafe; --brand-200:#bfdbfe; --brand-300:#93c5fd; --brand-400:#60a5fa; --brand-500:#3b82f6; --brand-600:#2563eb; --brand-700:#1d4ed8;
-  --accent: #06b6d4;
+  --brand-50:#f0f7ff; --brand-100:#e0efff; --brand-200:#b9ddff; --brand-300:#7cc2ff; --brand-400:#36a3ff; --brand-500:#007bff; --brand-600:#0061cc; --brand-700:#004aad;
+  --accent: #004aad;
 
   /* Surfaces (light theme) */
-  --bg:#f5f7fb;
+  --bg:#f8fafc;
   --surface:#ffffff;
-  --surface-2:#f7f9fc;
-  --text:#0f172a;
-  --muted:#5b6b86;
-  --border:#e5eaf2;
+  --surface-2:#f1f5f9;
+  --text:#1e293b;
+  --muted:#64748b;
+  --border:#e2e8f0;
 
   /* Effects */
-  --ring: 0 0 0 3px rgba(59,130,246,.35);
-  --shadow-lg: 0 20px 40px rgba(15, 23, 42, .08);
-  --shadow-md: 0 12px 24px rgba(15, 23, 42, .07);
-  --shadow-sm: 0 6px 16px rgba(15, 23, 42, .06);
+  --ring: 0 0 0 3px rgba(0, 74, 173, 0.15);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 
   /* Radii */
-  --r-sm:.5rem; --r-md:.75rem; --r-lg:1rem; --r-xl:1.25rem; --r-2xl:1.75rem;
+  --r-sm:0.375rem; --r-md:0.5rem; --r-lg:0.75rem; --r-xl:1rem; --r-2xl:1.5rem;
 
   /* Typography */
   --font-ui: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -55,7 +55,8 @@ button{cursor:pointer}
 .hv-card.pad{padding:24px}
 .hv-btn{display:inline-flex; align-items:center; gap:10px; border:1px solid var(--border); background:var(--surface-2); border-radius:var(--r-lg); padding:12px 16px; font-weight:700; transition:transform .15s, background .2s}
 .hv-btn:hover{transform:translateY(-1px)}
-.hv-btn.primary{background:linear-gradient(135deg, var(--brand-500), var(--brand-600)); color:#fff; border-color:var(--brand-400)}
+.hv-btn.primary{background:var(--brand-700); color:#fff; border-color:var(--brand-700)}
+.hv-btn.primary:hover{background:var(--brand-600); transform:translateY(-1px)}
 .hv-input, .hv-select, .hv-textarea{width:100%; background:var(--surface-2); color:var(--text); border:1px solid var(--border); border-radius:var(--r-md); padding:12px 14px}
 .hv-grid{display:grid; gap:20px}
 .hv-grid.cols-2{grid-template-columns:repeat(2, minmax(0,1fr))}

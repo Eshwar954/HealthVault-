@@ -52,9 +52,8 @@ const LandingPage = () => {
               <div className="d-flex justify-content-between align-items-center mt-3">
                 <div className="d-flex align-items-center gap-2">
                   <div className="dot dot-green" />
-                  <span className="small text-muted">Synced</span>
+                  <span className="small text-muted">Ready to search</span>
                 </div>
-                <span className="small text-muted">Search &lt; 5s</span>
               </div>
             </div>
           </div>
@@ -62,10 +61,10 @@ const LandingPage = () => {
 
         {/* Quick stats */}
         <div className="row text-center mt-5 g-4" role="group" aria-label="Quick stats">
-          <div className="col-6 col-md-3"><div className="hv-stat">99.9%<span>uptime</span></div></div>
-          <div className="col-6 col-md-3"><div className="hv-stat">256-bit<span>encryption</span></div></div>
-          <div className="col-6 col-md-3"><div className="hv-stat">RBAC<span>controls</span></div></div>
-          <div className="col-6 col-md-3"><div className="hv-stat">Audit<span>history</span></div></div>
+          <div className="col-6 col-md-3"><div className="hv-stat">Secure<span>Infrastructure</span></div></div>
+          <div className="col-6 col-md-3"><div className="hv-stat">End-to-End<span>Encryption</span></div></div>
+          <div className="col-6 col-md-3"><div className="hv-stat">Granular<span>RBAC Controls</span></div></div>
+          <div className="col-6 col-md-3"><div className="hv-stat">Full Audit<span>History</span></div></div>
         </div>
       </header>
 

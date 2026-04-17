@@ -69,15 +69,8 @@ const Register = () => {
     }
   };
 
-  const accentColor =
-    formData.role === "doctor"
-      ? "#14b8a6"
-      : formData.role === "diagnostic center"
-      ? "#9333ea"
-      : "#6366f1";
-
   return (
-    <main className="reg-pro" style={{ "--accent": accentColor }}>
+    <main className="reg-pro">
       <Toaster position="top-center" reverseOrder={false} />
       <section className="reg-pro-card">
         <div className="reg-pro-left">

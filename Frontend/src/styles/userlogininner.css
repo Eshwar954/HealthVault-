@@ -4,30 +4,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  background: #f8fafc;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  color: #0f172a;
+  color: #1e293b;
   overflow: hidden;
 }
 
-/* ======= SPLIT GLASS CONTAINER ======= */
+/* ======= SPLIT CONTAINER ======= */
 .uv-glass {
-  width: min(960px, 95%);
+  width: min(1000px, 95%);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border-radius: 28px;
+  border-radius: 16px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(22px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.2);
-  animation: rise 0.8s ease-out;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  animation: rise 0.5s ease-out;
 }
 
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -37,8 +36,8 @@
 
 /* ======= LEFT PANEL ======= */
 .uv-left {
-  background: linear-gradient(160deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
-  padding: 3rem 2rem;
+  background: #004aad;
+  padding: 4rem 3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -48,56 +47,28 @@
 }
 
 .uv-brand {
-  font-size: 2.4rem;
-  font-weight: 900;
+  font-size: 2.5rem;
+  font-weight: 800;
   color: #fff;
-  letter-spacing: 1px;
-  text-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  line-height: 1.2;
 }
 
 .uv-tagline {
-  color: rgba(255,255,255,0.85);
-  margin-top: 10px;
+  color: rgba(255,255,255,0.9);
+  margin-top: 20px;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
-/* animated pulse behind text */
-.uv-graphic {
-  position: absolute;
-  bottom: -40px;
-  right: -40px;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(255,255,255,0.35), transparent 70%);
-  border-radius: 50%;
-  animation: pulse 6s infinite ease-in-out;
-}
-@keyframes pulse {
-  0%,100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.2); opacity: 0.7; }
-}
-
-/* faint dotted pattern */
-.uv-dots {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 140%;
-  height: 140%;
-  background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px);
-  background-size: 20px 20px;
-  animation: floatDots 16s linear infinite;
-}
-@keyframes floatDots {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-40px); }
-}
+/* Remove decorative elements for professionalism */
+.uv-graphic { display: none; }
+.uv-dots { display: none; }
 
 /* ======= RIGHT PANEL ======= */
 .uv-right {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 3rem 2.5rem;
+  background: #ffffff;
+  padding: 4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -126,38 +97,37 @@
 
 .uv-form input,
 .uv-form select {
-  padding: 0.9rem 1.2rem;
-  border-radius: 999px;
-  border: 1px solid rgba(15, 23, 42, 0.1);
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
   font-size: 1rem;
-  color: #0f172a;
-  transition: all 0.25s ease;
-  background: rgba(255,255,255,0.85);
+  color: #1e293b;
+  transition: all 0.2s;
+  background: #fff;
 }
 
 .uv-form input:focus,
 .uv-form select:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.25);
+  border-color: #004aad;
+  box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.1);
 }
 
 /* ======= BUTTON ======= */
 .uv-btn {
-  background: linear-gradient(135deg, #111827, #1e293b);
+  background: #004aad;
   color: #fff;
-  padding: 0.95rem 1.4rem;
-  border-radius: 999px;
-  font-weight: 700;
+  padding: 0.9rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 10px 25px rgba(15,23,42,0.25);
+  transition: all 0.2s;
 }
 
 .uv-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 35px rgba(15,23,42,0.35);
+  background: #003b8a;
+  transform: translateY(-1px);
 }
 
 /* ======= RESPONSIVE ======= */
