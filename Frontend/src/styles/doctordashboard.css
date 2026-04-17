@@ -1,39 +1,37 @@
 /* ===== DOCTOR DASHBOARD ===== */
 .docdash {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background: var(--bg);
-    font-family: var(--font-ui);
-    color: var(--text);
-    padding: 3rem 1rem 5rem;
+    background: #f8fafc;
+    font-family: "Inter", sans-serif;
+    color: #1e293b;
+    padding: 3rem 1.5rem;
   }
   
   /* ===== CARD ===== */
   .docdash-card {
-    background: var(--surface);
-    border-radius: var(--r-lg);
-    width: min(900px, 95%);
-    padding: 2.5rem 3rem;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--border);
+    background: #ffffff;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid #e2e8f0;
   }
   
   /* ===== HEADER ===== */
   .docdash-header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
   }
   .docdash-header h2 {
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--text);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
   }
   .docdash-header p {
-    color: var(--muted);
-    margin-top: 0.4rem;
+    color: #64748b;
     font-size: 1rem;
   }
   
@@ -41,75 +39,87 @@
   .docdash-info {
     display: flex;
     flex-direction: column;
-    gap: 1.1rem;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
   }
   .docdash-row {
     display: flex;
     justify-content: space-between;
-    background: var(--surface-2);
-    border-radius: var(--r-md);
-    padding: 1rem 1.2rem;
-    border: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    transition: background 0.2s;
+  }
+  .docdash-row:last-child {
+    border-bottom: none;
+  }
+  .docdash-row:hover {
+    background: #f8fafc;
   }
   .label {
-    font-weight: 700;
-    color: var(--muted);
+    font-weight: 600;
+    color: #64748b;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
   }
   .value {
     font-weight: 500;
-    color: var(--text);
+    color: #1e293b;
   }
   
   /* ===== BUTTONS ===== */
   .docdash-btns {
     display: flex;
     justify-content: center;
-    margin-top: 1.8rem;
+    margin-top: 2rem;
   }
   .edit-btn {
-    background: var(--brand-700);
-    border: 1px solid var(--brand-700);
-    color: #fff;
-    padding: 0.9rem 2rem;
-    border-radius: var(--r-md);
-    font-weight: 700;
+    background: #0f766e;
+    color: #ffffff;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
   }
   .edit-btn:hover {
-    background: var(--brand-600);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    background: #115e59;
+    transform: translateY(-1px);
   }
   
   /* ===== EDIT FORM ===== */
   .docdash-form {
     display: flex;
     flex-direction: column;
-    gap: 1.3rem;
+    gap: 1.25rem;
   }
   .input-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
   .input-group label {
+    font-size: 0.875rem;
     font-weight: 600;
-    color: var(--muted);
+    color: #475569;
   }
   .input-group input {
-    padding: 0.9rem 1rem;
-    border-radius: var(--r-md);
-    border: 1px solid var(--border);
-    background: var(--surface-2);
-    color: var(--text);
-    font-size: 1rem;
-    transition: all 0.2s ease;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    color: #1e293b;
+    font-size: 0.95rem;
+    transition: all 0.2s;
   }
   .input-group input:focus {
-    border-color: var(--brand-700);
-    box-shadow: var(--ring);
     outline: none;
+    border-color: #0f766e;
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+    background: #fff;
   }
   
   /* FORM ACTIONS */
@@ -117,74 +127,72 @@
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
   }
   .docdash-actions .save {
-    background: var(--brand-700);
-    color: #fff;
-    border: 1px solid var(--brand-700);
-    padding: 0.9rem 1.5rem;
-    border-radius: var(--r-md);
-    font-weight: 700;
+    background: #0f766e;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
   }
   .docdash-actions .cancel {
-    background: var(--surface-2);
-    color: var(--text);
-    border: 1px solid var(--border);
-    padding: 0.9rem 1.5rem;
-    border-radius: var(--r-md);
+    background: #f1f5f9;
+    color: #475569;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
     font-weight: 600;
+    border: 1px solid #e2e8f0;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
   }
   .docdash-actions .save:hover {
-    background: var(--brand-600);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    background: #115e59;
+    transform: translateY(-1px);
   }
   .docdash-actions .cancel:hover {
-    background: var(--border);
+    background: #e2e8f0;
   }
   
   /* ===== FOOTER ===== */
   .docdash-footer {
     text-align: center;
-    margin-top: 2rem;
-    max-width: 750px;
+    margin: 3rem auto 0;
+    max-width: 600px;
   }
   .docdash-footer blockquote {
     font-style: italic;
-    color: var(--muted);
-    font-size: 1.1rem;
-    line-height: 1.7;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
   }
   
   /* ===== LOADER ===== */
   .docdash-loader {
-    color: var(--brand-700);
+    color: #0f766e;
     text-align: center;
     font-weight: 600;
-    font-size: 1.2rem;
-    padding-top: 6rem;
+    font-size: 1.1rem;
+    padding-top: 10rem;
   }
   
   /* ===== RESPONSIVE ===== */
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
+    .docdash {
+      padding: 2rem 1rem;
+    }
     .docdash-card {
-      padding: 2rem 1.4rem;
+      padding: 1.5rem;
     }
     .docdash-row {
       flex-direction: column;
-      align-items: flex-start;
-      gap: 0.4rem;
+      gap: 0.25rem;
     }
-    .label {
-      font-size: 0.95rem;
-    }
-    .value {
-      font-size: 0.95rem;
+    .docdash-header h2 {
+      font-size: 1.5rem;
     }
   }
-  

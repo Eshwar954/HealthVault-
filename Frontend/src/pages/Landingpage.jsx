@@ -83,7 +83,7 @@ const LandingPage = () => {
             { title: "📱 Mobile Ready", desc: "Camera uploads, PDF support, and responsive UI across devices.", chip: "On the go" },
           ].map((f, i) => (
             <div className="col-sm-6 col-lg-4" key={i}>
-              <article className="hv-card h-100 p-4 reveal">
+              <article className="hv-card h-100 p-4">
                 <h4 className="mb-2">{f.title}</h4>
                 <p className="text-muted mb-3">{f.desc}</p>
                 <span className="hv-chip">{f.chip}</span>
@@ -97,7 +97,7 @@ const LandingPage = () => {
       <section id="how" className="container py-5">
         <div className="row g-4 align-items-center">
           <div className="col-lg-6 order-lg-2">
-            <img src={Aboutus} alt="About HealthVault" className="img-fluid rounded-4 shadow-sm reveal" />
+            <img src={Aboutus} alt="About HealthVault" className="img-fluid rounded-4 shadow-sm" />
           </div>
           <div className="col-lg-6">
             <h2 className="fw-bold text-primary">How it works</h2>
@@ -125,7 +125,7 @@ const LandingPage = () => {
               { quote: "“No printing, no calls. Reports go straight to patients and doctors. Clean.”", name: "Meera • Lab Admin" },
             ].map((t, idx) => (
               <div key={idx} className="col-md-4">
-                <figure className="hv-quote h-100 reveal">
+                <figure className="hv-quote h-100">
                   <blockquote>{t.quote}</blockquote>
                   <figcaption>{t.name}</figcaption>
                 </figure>
@@ -137,7 +137,7 @@ const LandingPage = () => {
 
       {/* ===== CTA ===== */}
       <section id="cta" className="container py-5">
-        <div className="hv-cta d-md-flex align-items-center justify-content-between p-4 p-lg-5 rounded-4 reveal">
+        <div className="hv-cta d-md-flex align-items-center justify-content-between p-4 p-lg-5 rounded-4">
           <div>
             <h3 className="fw-bold text-primary mb-2">Start your secure health vault today</h3>
             <p className="mb-0 text-secondary">Free for individuals. Simple plans for clinics and labs.</p>
@@ -151,7 +151,7 @@ const LandingPage = () => {
       {/* ===== FAQ ===== */}
       <section id="faq" className="container py-5">
         <h2 className="fw-bold text-primary text-center mb-4">Frequently asked questions</h2>
-        <div className="accordion reveal" id="faqAcc">
+        <div className="accordion" id="faqAcc">
           {[
             { q: "Is my data private?", a: "Yes. Your files are encrypted in transit and at rest. You control sharing links and can revoke access anytime." },
             { q: "Can I upload from my phone?", a: "Absolutely. HealthVault is mobile-friendly and supports camera uploads and PDFs." },
