@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
+const mongoose = require("mongoose");
 
 // Helper function to generate simple loginId
 const generateLoginId = async (role) => {
@@ -46,8 +47,12 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ message: "All required fields must be filled" });
     }
 
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ message: "Database connection failed. Please check server logs." });
+    }
+
     // Validate gender if role is 'user'
-    if (role.toLowerCase() === "user" && !["Male", "Female", "Other"].includes(gender)) {
+    if (role.toLowerCase() === "user" && gender && !["Male", "Female", "Other"].includes(gender)) {
       return res.status(400).json({ message: "Invalid gender value. Allowed: Male, Female, Other." });
     }
 
@@ -90,7 +95,7 @@ const registerUser = async (req, res) => {
     });
   } catch (err) {
     console.error("Registration error:", err);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error: " + (err.message || "Unknown error") });
   }
 };
 
@@ -101,6 +106,11 @@ const loginUser = async (req, res) => {
 
     if (!email || !password || !role) {
       return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (mongoose.connection.readyState !== 1) {
+      console.error("Database connection not ready");
+      return res.status(503).json({ message: "Database connection failed. Please check server logs." });
     }
 
     const user = await User.findOne({ email });
@@ -115,6 +125,11 @@ const loginUser = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid password" });
+    }
+
+    if (!process.env.JWT_SECRET) {
+      console.error("JWT_SECRET is not defined in environment variables");
+      return res.status(500).json({ message: "Server configuration error (missing secret)" });
     }
 
     const token = jwt.sign(
@@ -139,7 +154,7 @@ const loginUser = async (req, res) => {
     });
   } catch (err) {
     console.error("Login error:", err);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error: " + (err.message || "Unknown error") });
   }
 };
 
