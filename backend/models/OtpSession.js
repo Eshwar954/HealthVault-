@@ -7,4 +7,4 @@ const otpSessionSchema = new mongoose.Schema({
   isVerified: { type: Boolean, default: false },
 });
 
-module.exports = mongoose.model('OtpSession', otpSessionSchema);
+module.exports = mongoose.models.OtpSession || mongoose.model('OtpSession', otpSessionSchema);

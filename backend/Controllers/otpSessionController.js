@@ -12,7 +12,7 @@ exports.sendOtp = async (req, res) => {
   try {
     const user = await User.findOne({ loginId });
     if (!user || !user.email) {
-      return res.status(404).json({ message: "User or email not found" });
+      return res.status(404).json({ message: "User not found or email not associated with this ID" });
     }
 
     const otp = generateOtp();
@@ -25,11 +25,14 @@ exports.sendOtp = async (req, res) => {
     );
 
     await sendOtpToUser(user.email, otp);
-    res.status(200).json({ message: "OTP sent successfully" });
+    res.status(200).json({ message: "OTP sent successfully to " + user.email });
 
   } catch (error) {
     console.error("OTP Error:", error);
-    res.status(500).json({ message: "Server error while sending OTP" });
+    res.status(500).json({ 
+      message: "Server error while sending OTP", 
+      error: error.details || error.message 
+    });
   }
 };
 

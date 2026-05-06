@@ -28,8 +28,11 @@ const sendOtpToUser = async (email, otp) => {
 
   } catch (err) {
     console.error("[MAIL] Brevo failed");
-    console.error(err.response?.data || err.message);
-    throw err;
+    const errorData = err.response?.data || err.message;
+    console.error(errorData);
+    const error = new Error("Failed to send email via Brevo");
+    error.details = errorData;
+    throw error;
   }
 };
 
