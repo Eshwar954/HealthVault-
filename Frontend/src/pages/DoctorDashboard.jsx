@@ -1,36 +1,22 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import api from "../api/client";
 import "../styles/doctordashboard.css";
-import { useNavigate } from "react-router-dom";
-const BASE_URL = import.meta.env.VITE_API_URL;
 
 const DoctorDashboard = () => {
-  const navigate = useNavigate();
   const [doctorData, setDoctorData] = useState(null);
   const [formData, setFormData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
+  const fetchDoctorData = async () => {
+    const res = await api.get("/api/doctors/me");
+    const doctor = res.data.doctor || res.data;
+    setDoctorData(doctor);
+    setFormData(doctor);
+  };
+
   useEffect(() => {
-    const fetchDoctorData = async () => {
-      try {
-        const storedEmail = localStorage.getItem("email");
-        if (!storedEmail) {
-          navigate("/login");
-          return;
-        }
-        const encodedEmail = encodeURIComponent(storedEmail);
-        const res = await axios.get(
-          `${BASE_URL}/api/doctors/${encodedEmail}`
-        );
-        if (res.data) {
-          setDoctorData(res.data);
-          setFormData(res.data);
-        }
-      } catch (err) {
-        console.error("Error fetching doctor data:", err);
-      }
-    };
-    fetchDoctorData();
+    fetchDoctorData().catch((err) => console.error("Error fetching doctor data:", err));
   }, []);
 
   const handleChange = (e) => {
@@ -41,22 +27,16 @@ const DoctorDashboard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const updated = { ...formData, email: doctorData.email };
-      const res = await axios.put(
-        `${BASE_URL}/api/doctors/update`,
-        updated
-      );
+      const res = await api.put("/api/doctors/me", formData);
       setDoctorData(res.data.doctor);
+      setFormData(res.data.doctor);
       setIsEditing(false);
-      alert("Profile updated successfully!");
     } catch (err) {
-      console.error("Error updating profile:", err);
-      alert("Failed to update profile");
+      alert(err.response?.data?.message || "Failed to update profile");
     }
   };
 
-  if (!doctorData)
-    return <div className="docdash-loader">Loading your dashboard...</div>;
+  if (!doctorData) return <div className="docdash-loader">Loading your dashboard...</div>;
 
   const fields = [
     { key: "name", label: "Full Name" },
@@ -74,7 +54,7 @@ const DoctorDashboard = () => {
       <section className="docdash-card">
         <header className="docdash-header">
           <h2>Doctor Profile</h2>
-          <p>Welcome back, Dr. {doctorData.name?.split(" ")[0]} 👋</p>
+          <p>Welcome back, Dr. {doctorData.name?.split(" ")[0]}</p>
         </header>
 
         {!isEditing ? (
@@ -82,7 +62,7 @@ const DoctorDashboard = () => {
             {fields.map(({ key, label }) => (
               <div className="docdash-row" key={key}>
                 <span className="label">{label}</span>
-                <span className="value">{doctorData[key] || "—"}</span>
+                <span className="value">{doctorData[key] || "-"}</span>
               </div>
             ))}
 
@@ -90,6 +70,9 @@ const DoctorDashboard = () => {
               <button className="edit-btn" onClick={() => setIsEditing(true)}>
                 Edit Profile
               </button>
+              <Link className="edit-btn" to="/doctor/appointments">
+                View Appointments
+              </Link>
             </div>
           </div>
         ) : (
@@ -118,13 +101,6 @@ const DoctorDashboard = () => {
           </form>
         )}
       </section>
-
-      <footer className="docdash-footer">
-        <blockquote>
-          “Healing is a matter of time, but it is sometimes also a matter of opportunity.”
-          <br /> — Hippocrates
-        </blockquote>
-      </footer>
     </main>
   );
 };

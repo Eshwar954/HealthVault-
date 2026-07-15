@@ -18,8 +18,29 @@ const storage = multer.diskStorage({
     },
 });
 
+const fileFilter = (req, file, cb) => {
+    const allowedExtensions = /jpeg|jpg|png|pdf|doc|docx/;
+    const allowedMimeTypes = [
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ];
+    const extname = allowedExtensions.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = allowedMimeTypes.includes(file.mimetype);
+
+    if (extname && mimetype) {
+        return cb(null, true);
+    }
+
+    cb(new Error('Only images, PDF, and Word document files are allowed'));
+};
+
 const upload = multer({
     storage,
+    fileFilter,
     limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB limit
 });
 

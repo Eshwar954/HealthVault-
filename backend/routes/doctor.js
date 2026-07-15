@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User'); // Assuming you use User model for both users and doctors
-const { updateDoctor } = require('../Controllers/doctorcontroller');
+const { updateDoctor, getDoctorMe, listDoctors } = require('../Controllers/doctorcontroller');
+const { requireAuth, requireRole } = require('../middleware/auth');
 // ✅ Get doctor data by email
 // ✅ Get doctor data by email
 // Assuming you're using Express
-router.get('/:email', async (req, res) => {
+router.get('/', requireAuth, listDoctors);
+router.get('/me', requireAuth, requireRole('doctor'), getDoctorMe);
+
+router.get('/:email', requireAuth, async (req, res) => {
     const { email } = req.params;
   
     try {
@@ -26,5 +30,6 @@ router.get('/:email', async (req, res) => {
   
 // ✅ Update doctor data
 
-router.put('/update', updateDoctor);
+router.put('/me', requireAuth, requireRole('doctor'), updateDoctor);
+router.put('/update', requireAuth, requireRole('doctor'), updateDoctor);
 module.exports = router;

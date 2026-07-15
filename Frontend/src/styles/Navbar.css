@@ -1,56 +1,43 @@
 .app-navbar {
-  background: #ffffff !important;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 0.75rem 0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid #dbe4e7;
+  background: rgba(248, 251, 252, 0.97);
+  backdrop-filter: blur(12px);
 }
 
-.app-navbar .navbar-brand {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #0f766e !important;
-  letter-spacing: -0.025em;
+.app-navbar-inner {
+  display: flex;
+  align-items: center;
+  width: min(1180px, 100%);
+  min-height: 73px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-.app-navbar .nav-link {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #64748b !important;
-  padding: 0.5rem 1rem !important;
-  transition: all 0.2s;
-}
+.app-brand { display: inline-flex; align-items: center; gap: 9px; color: #183c68; font-size: 1.08rem; font-weight: 800; text-decoration: none; }
+.app-brand-mark { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 7px; background: #214f87; color: #fff; }
+.app-nav-content { display: flex; align-items: center; flex: 1; justify-content: space-between; gap: 24px; margin-left: 44px; }
+.app-nav-links, .app-nav-actions { display: flex; align-items: center; gap: 5px; }
+.app-nav-links a, .app-login-link, .app-logout { border: 0; background: transparent; color: #596b76; font-size: 0.88rem; font-weight: 700; text-decoration: none; }
+.app-nav-links a { padding: 9px 10px; border-bottom: 2px solid transparent; }
+.app-nav-links a:hover, .app-nav-links a.active { color: #214f87; border-bottom-color: #214f87; }
+.app-nav-actions { gap: 15px; }
+.app-login-link:hover { color: #087c73; }
+.app-logout { display: inline-flex; align-items: center; gap: 7px; padding: 8px 2px; color: #8f3d43; }
+.app-logout:hover { color: #b63d45; }
+.app-nav-toggle { display: none; margin-left: auto; border: 0; background: transparent; color: #28414c; padding: 8px; }
 
-.app-navbar .nav-link:hover,
-.app-navbar .nav-link.active {
-  color: #0f766e !important;
-}
-
-.app-navbar .btn {
-  font-size: 0.875rem;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-
-.app-navbar .btn-primary {
-  background: #0f766e;
-  border-color: #0f766e;
-}
-
-.app-navbar .btn-primary:hover {
-  background: #115e59;
-  border-color: #115e59;
-  transform: translateY(-1px);
-}
-
-@media (max-width: 991.98px) {
-  .app-navbar .navbar-nav {
-    padding: 1rem 0;
-  }
-  .app-navbar .nav-link {
-    padding: 0.75rem 0 !important;
-    border-bottom: 1px solid #f1f5f9;
-  }
-  .app-navbar .nav-item:last-child .nav-link {
-    border-bottom: none;
-  }
+@media (max-width: 820px) {
+  .app-navbar-inner { min-height: 64px; padding: 0 16px; flex-wrap: wrap; }
+  .app-nav-toggle { display: grid; place-items: center; }
+  .app-nav-content { display: none; width: 100%; margin: 0; padding: 8px 0 16px; border-top: 1px solid #e6edef; flex-direction: column; align-items: stretch; gap: 12px; }
+  .app-nav-content.open { display: flex; }
+  .app-nav-links, .app-nav-actions { align-items: stretch; flex-direction: column; gap: 2px; }
+  .app-nav-links a { padding: 10px 4px; border-bottom: 0; border-left: 2px solid transparent; }
+  .app-nav-links a:hover, .app-nav-links a.active { border-left-color: #214f87; border-bottom: 0; padding-left: 10px; }
+  .app-nav-actions { padding-top: 10px; border-top: 1px solid #e6edef; }
+  .app-nav-actions .btn { width: 100%; }
+  .app-login-link, .app-logout { padding: 10px 4px; }
 }

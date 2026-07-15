@@ -2,12 +2,20 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const { updateUser } = require('../Controllers/updatecontroller');
+const { requireAuth, requireRole } = require('../middleware/auth');
+
+router.get('/me', requireAuth, requireRole('user'), (req, res) => {
+  res.json({ user: req.user });
+});
+
+router.put('/me', requireAuth, requireRole('user'), updateUser);
+router.put('/update', requireAuth, requireRole('user'), updateUser);
 
 // ✅ Get user data by email
-router.get('/:email', async (req, res) => {
+router.get('/:email', requireAuth, async (req, res) => {
   try {
     const { email } = req.params;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('-password');
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.json(user);
   } catch (error) {
@@ -16,11 +24,8 @@ router.get('/:email', async (req, res) => {
   }
 });
 
-// ✅ Update user profile (flexible)
-router.put('/update', updateUser);
-
 // ✅ Update user profile by email (legacy/specific)
-router.put('/update/:email', async (req, res) => {
+router.put('/update/:email', requireAuth, requireRole('user'), async (req, res) => {
   try {
     const { email } = req.params;
     const { loginId, password, bmi, ...updatedData } = req.body;

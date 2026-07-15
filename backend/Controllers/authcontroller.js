@@ -3,6 +3,32 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const mongoose = require("mongoose");
 
+const toSafeUser = (user) => ({
+  _id: user._id,
+  userId: user.userId,
+  loginId: user.loginId,
+  name: user.name,
+  email: user.email,
+  role: user.role,
+  age: user.age,
+  gender: user.gender,
+  phone: user.phone,
+  specialization: user.specialization,
+  clinicAddress: user.clinicAddress,
+  experience: user.experience,
+  services: user.services,
+  address: user.address,
+  dateOfBirth: user.dateOfBirth,
+  bloodType: user.bloodType,
+  height: user.height,
+  weight: user.weight,
+  bmi: user.bmi,
+  city: user.city,
+  state: user.state,
+  emergencyContactName: user.emergencyContactName,
+  emergencyContactNumber: user.emergencyContactNumber,
+});
+
 // Helper function to generate simple loginId
 const generateLoginId = async (role) => {
   const prefix = {
@@ -145,13 +171,7 @@ const loginUser = async (req, res) => {
       maxAge: 60 * 60 * 1000,
     });
 
-    res.status(200).json({
-      message: "Login successful",
-      userId: user._id,
-      email: user.email,
-      role: user.role,
-      loginId: user.loginId,
-    });
+    res.status(200).json({ message: "Login successful", user: toSafeUser(user) });
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ message: "Internal server error: " + (err.message || "Unknown error") });
@@ -170,4 +190,8 @@ const logoutUser = (req, res) => {
   res.status(200).json({ message: "Logout successful" });
 };
 
-module.exports = { registerUser, loginUser, logoutUser };
+const getCurrentUser = (req, res) => {
+  res.status(200).json({ user: toSafeUser(req.user) });
+};
+
+module.exports = { registerUser, loginUser, logoutUser, getCurrentUser };

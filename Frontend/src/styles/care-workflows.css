@@ -1,0 +1,40 @@
+.care-layout { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.25fr); gap: 22px; align-items: start; }
+.care-stack { display: grid; gap: 16px; }
+.care-form-panel, .care-list-panel, .record-panel, .audit-panel { padding: 24px; }
+.care-form { display: grid; gap: 16px; }
+.access-callout { display: flex; align-items: flex-start; gap: 11px; margin-bottom: 22px; padding: 13px; border: 1px solid #bfe2dc; border-radius: 6px; background: #edf8f6; color: #155951; font-size: 0.88rem; line-height: 1.5; }
+.access-callout strong { display: block; color: #0c6159; }
+.appointment-stack { display: grid; gap: 10px; }
+.appointment-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; padding: 17px 0; border-bottom: 1px solid #e3eaed; }
+.appointment-item:first-child { padding-top: 0; }
+.appointment-item:last-child { padding-bottom: 0; border-bottom: 0; }
+.appointment-title-row { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; }
+.appointment-title { margin: 0; font-size: 1rem; }
+.appointment-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; color: #5a6c77; font-size: 0.86rem; }
+.appointment-meta span { display: inline-flex; align-items: center; gap: 5px; }
+.appointment-reason { margin: 9px 0 0; color: #536570; font-size: 0.9rem; line-height: 1.45; }
+.appointment-actions { display: flex; align-items: center; align-self: center; gap: 8px; }
+.access-expiry { margin: 8px 0 0; color: #12645c; font-size: 0.82rem; font-weight: 700; }
+.diag-divider { margin: 28px 0; border: 0; border-top: 1px solid #dfe7ea; }
+.order-tests { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.test-chip { border: 1px solid #c9d9ef; border-radius: 4px; background: #eff4ff; color: #3159be; padding: 3px 6px; font-size: 0.77rem; font-weight: 700; }
+.file-picker { display: flex; align-items: center; gap: 12px; }
+.file-picker input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+.file-picker label { display: inline-flex; align-items: center; gap: 8px; min-height: 39px; border: 1px dashed #7ba6a0; border-radius: 6px; padding: 0 12px; background: #f5fbfa; color: #0d685f; font-size: 0.86rem; font-weight: 700; cursor: pointer; }
+.file-picker-name { overflow: hidden; max-width: 180px; color: #687985; font-size: 0.82rem; text-overflow: ellipsis; white-space: nowrap; }
+.records-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.record-item { display: grid; gap: 13px; min-height: 182px; padding: 16px; border: 1px solid #d9e4e7; border-radius: 7px; background: #fff; }
+.record-icon { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 6px; background: #e8efff; color: #3159be; }
+.record-item h3 { overflow: hidden; margin: 0; color: #1f3540; font-size: 0.95rem; text-overflow: ellipsis; white-space: nowrap; }
+.record-item p { margin: 0; color: #667884; font-size: 0.83rem; }
+.record-item .btn { margin-top: auto; width: 100%; }
+.audit-action { display: inline-flex; align-items: center; gap: 6px; color: #3159be; font-weight: 700; }
+
+@media (max-width: 900px) { .care-layout { grid-template-columns: 1fr; } }
+@media (max-width: 600px) {
+  .care-form-panel, .care-list-panel, .record-panel, .audit-panel { padding: 18px; }
+  .appointment-item { grid-template-columns: 1fr; gap: 13px; }
+  .appointment-actions { align-self: auto; flex-wrap: wrap; }
+  .file-picker { align-items: stretch; flex-direction: column; }
+  .file-picker-name { max-width: 100%; }
+}

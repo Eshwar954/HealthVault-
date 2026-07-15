@@ -1,107 +1,68 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "../api/client";
 import "../styles/UserDashboard.css";
-const BASE_URL = import.meta.env.VITE_API_URL;
+
+const initialUserData = {
+  name: "",
+  phone: "",
+  dateOfBirth: "",
+  gender: "",
+  bloodType: "",
+  height: "",
+  weight: "",
+  bmi: "",
+  email: "",
+  city: "",
+  state: "",
+  loginId: "",
+};
 
 const UserDashboard = () => {
-  const navigate = useNavigate();
-  const [userData, setUserData] = useState({
-    name: "",
-    phone: "",
-    dateOfBirth: "",
-    gender: "",
-    bloodType: "",
-    height: "",
-    weight: "",
-    bmi: "",
-    email: "",
-    city: "",
-    state: "",
-  });
-
+  const [userData, setUserData] = useState(initialUserData);
+  const [formData, setFormData] = useState(initialUserData);
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({ ...userData });
 
-  // Fetch user data from API
+  const fetchUserData = async () => {
+    const response = await api.get("/api/user/me");
+    const user = response.data.user || response.data;
+    setUserData(user);
+    setFormData(user);
+  };
+
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const storedEmail = localStorage.getItem("email");
-        if (!storedEmail) {
-          navigate("/login");
-          return;
-        }
-        
-        const response = await axios.get(
-          `${BASE_URL}/api/user/${storedEmail}`
-        );
-        if (response.data) {
-          const { _id, services, userId, password, ...filteredData } = response.data;
+    fetchUserData().catch((error) => console.error("Error fetching user data:", error));
+  }, []);
 
-          setUserData(filteredData);
-          setFormData(filteredData);
-        }
-      } catch (error) {
-        console.error(
-          "Error fetching user data:",
-          error.response?.data || error.message
-        );
-      }
-    };
-
-    fetchUserData();
-  }, [navigate]);
-
-  // BMI Calculation
   useEffect(() => {
-    if (formData.height>0 && formData.weight>0) {
+    if (formData.height > 0 && formData.weight > 0) {
       const heightInMeters = formData.height / 100;
-      const calculatedBMI = (
-        formData.weight /
-        (heightInMeters * heightInMeters)
-      ).toFixed(2);
-      setFormData((prev) => ({
-        ...prev,
-        bmi: calculatedBMI,
-      }));
+      const bmi = (formData.weight / (heightInMeters * heightInMeters)).toFixed(2);
+      setFormData((prev) => ({ ...prev, bmi }));
     }
   }, [formData.height, formData.weight]);
 
-  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: (name === "height" || name === "weight" || name === "phone") ? Number(value) : value,
-    }));
+    const numericFields = ["height", "weight", "phone"];
+    setFormData((prev) => ({ ...prev, [name]: numericFields.includes(name) ? Number(value) : value }));
   };
-  
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`${BASE_URL}/api/user/update`,formData);
-      setUserData(formData);
-      alert("Profile updated successfully!");
+      const response = await api.put("/api/user/me", formData);
+      setUserData(response.data.user);
+      setFormData(response.data.user);
       setIsEditing(false);
     } catch (error) {
-      console.error(
-        "Error updating profile:",
-        error.response?.data || error.message
-      );
+      alert(error.response?.data?.message || "Failed to update profile");
     }
   };
-
-  // Close modal
-  const closeModal = () => setIsEditing(false);
 
   return (
     <div className="container mt-5">
       <div className="card ">
         <h2 className="mb-4 mt-4 text-center">User Profile</h2>
-
         <table className="user-info-table">
           <tbody>
             {[
@@ -127,104 +88,46 @@ const UserDashboard = () => {
           </tbody>
         </table>
       </div>
-      <button
-          className="btn btn-primary custom-small-btn mt-3"
-          onClick={() => setIsEditing(true)}
-        >
-          Edit Profile
-        </button>
 
-      {/* Modal */}
+      <button className="btn btn-primary custom-small-btn mt-3" onClick={() => setIsEditing(true)}>
+        Edit Profile
+      </button>
+
       {isEditing && (
-        <div
-          className="modal fade show d-block"
-          tabIndex="-1"
-          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-        >
+        <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
           <div className="modal-dialog">
             <div className="modal-content">
-              {/* Modal Header */}
               <div className="modal-header">
                 <h5 className="modal-title">Edit Profile</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={closeModal}
-                ></button>
+                <button type="button" className="btn-close" onClick={() => setIsEditing(false)} />
               </div>
-
-              {/* Modal Body */}
               <div className="modal-body">
                 <form onSubmit={handleSubmit}>
-                  {[
-                    "name",
-                    "phone",
-                    "gender",
-                    "bloodType",
-                    "height",
-                    "weight",
-                    "city",
-                    "state",
-                  ].map((key) => (
+                  {["name", "phone", "gender", "bloodType", "height", "weight", "city", "state"].map((key) => (
                     <div className="mb-3" key={key}>
-                      <label className="form-label">
-                        {key.charAt(0).toUpperCase() + key.slice(1)}:
-                      </label>
+                      <label className="form-label">{key.charAt(0).toUpperCase() + key.slice(1)}:</label>
                       <input
-                        type={
-                          
-                             key === "phone" ||
-                              key === "height" ||
-                              key === "weight"
-                            ? "number"
-                            : "text"
-                        }
+                        type={["phone", "height", "weight"].includes(key) ? "number" : "text"}
                         name={key}
                         value={formData[key] || ""}
                         onChange={handleChange}
                         className="form-control"
-                        required={
-                          key !== "bloodType" &&
-                          key !== "city" &&
-                          key !== "state"
-                        }
                       />
                     </div>
                   ))}
-
-                  {/* Email (Read-Only) */}
                   <div className="mb-3">
                     <label className="form-label">Email:</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email || ""}
-                      className="form-control"
-                      disabled
-                    />
+                    <input type="email" value={formData.email || ""} className="form-control" disabled />
                   </div>
-
-                  {/* BMI (Calculated) */}
                   <div className="mb-3">
                     <label className="form-label">BMI:</label>
-                    <input
-                      type="text"
-                      value={formData.bmi || "-"}
-                      className="form-control"
-                      disabled
-                    />
+                    <input type="text" value={formData.bmi || "-"} className="form-control" disabled />
                   </div>
-
-                  {/* Submit and Cancel Buttons */}
                   <div className="d-flex justify-content-between">
                     <button type="submit" className="btn btn-success">
                       Save
                     </button>
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      onClick={closeModal}
-                    >
+                    <button type="button" className="btn btn-secondary" onClick={() => setIsEditing(false)}>
                       Cancel
                     </button>
                   </div>
@@ -233,11 +136,6 @@ const UserDashboard = () => {
             </div>
           </div>
         </div>
-      )}
-
-      {/* Modal Overlay */}
-      {isEditing && (
-        <div className="modal-backdrop fade show" onClick={closeModal}></div>
       )}
     </div>
   );

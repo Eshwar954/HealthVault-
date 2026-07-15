@@ -1,11 +1,8 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "../api/client";
 import "../styles/uploadfile.css";
-const BASE_URL = import.meta.env.VITE_API_URL;
 
 const UploadFile = () => {
-  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
   const [doctorName, setDoctorName] = useState("");
@@ -14,33 +11,19 @@ const UploadFile = () => {
   const [isUploading, setIsUploading] = useState(false);
 
   const fetchFiles = async () => {
-    const loginId = localStorage.getItem("loginId");
-    if (!loginId) {
-      navigate("/login");
-      return;
-    }
-
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/api/files/fetch/${loginId}`
-      );
-      setUploadedFiles(response.data.files || []);
-    } catch (error) {
-      console.error("Failed to fetch files:", error);
-    }
+    const response = await api.get("/api/files/me");
+    setUploadedFiles(response.data.files || []);
   };
 
   useEffect(() => {
-    fetchFiles();
-  }, [navigate]);
+    fetchFiles().catch((error) => console.error("Failed to fetch files:", error));
+  }, []);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
-      if (!fileName) {
-        setFileName(selectedFile.name.split('.')[0]); // Default name to original filename without extension
-      }
+      if (!fileName) setFileName(selectedFile.name.split(".")[0]);
     }
   };
 
@@ -51,33 +34,23 @@ const UploadFile = () => {
       return;
     }
 
-    const loginId = localStorage.getItem("loginId");
-    if (!loginId) {
-      alert("Session expired. Please log in again.");
-      navigate("/login");
-      return;
-    }
-
-    setIsUploading(true);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("fileName", fileName);
     formData.append("doctorName", doctorName);
     formData.append("reportType", reportType);
-    formData.append("loginId", loginId);
 
+    setIsUploading(true);
     try {
-      await axios.post(`${BASE_URL}/api/files/upload`, formData, {
+      await api.post("/api/files/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      alert("File uploaded successfully");
       setFile(null);
       setFileName("");
       setDoctorName("");
       setReportType("");
       fetchFiles();
     } catch (error) {
-      console.error("Upload Error:", error);
       alert(`Upload failed: ${error.response?.data?.message || "Internal server error"}`);
     } finally {
       setIsUploading(false);
@@ -87,7 +60,7 @@ const UploadFile = () => {
   const handleDelete = async (fileId) => {
     if (!window.confirm("Are you sure you want to delete this file?")) return;
     try {
-      await axios.delete(`${BASE_URL}/api/files/delete/${fileId}`);
+      await api.delete(`/api/files/${fileId}`);
       fetchFiles();
     } catch (error) {
       alert(`Failed to delete file: ${error.response?.data?.message || error.message}`);
@@ -95,16 +68,30 @@ const UploadFile = () => {
   };
 
   const reportTypes = [
-    { group: "General Reports", options: ["General Checkup", "Prescription", "Discharge Summary", "Medical Certificate"] },
-    { group: "Lab Tests", options: ["Blood Test", "Urine Test", "Stool Test", "Liver Function Test (LFT)", "Kidney Function Test (KFT)", "Thyroid Profile", "Lipid Profile", "HbA1c (Diabetes)", "Complete Blood Count (CBC)"] },
-    { group: "Specialist Reports", options: ["Cardiology", "Neurology", "Orthopedics", "Gastroenterology", "Dermatology", "Pulmonology", "Endocrinology", "Nephrology", "Urology", "ENT (Ear, Nose, Throat)"] },
-    { group: "Imaging & Diagnostics", options: ["X-Ray", "MRI", "CT Scan", "Ultrasound", "Echocardiogram (ECHO)", "ECG", "EEG", "PET Scan", "Mammogram"] },
-    { group: "Miscellaneous", options: ["Vaccination Record", "Allergy Test", "Mental Health Evaluation", "Vision Test", "Hearing Test", "Dental Report", "Gynecology", "Pediatrics"] }
+    "General Checkup",
+    "Prescription",
+    "Discharge Summary",
+    "Medical Certificate",
+    "Blood Test",
+    "Urine Test",
+    "Liver Function Test (LFT)",
+    "Kidney Function Test (KFT)",
+    "Thyroid Profile",
+    "Lipid Profile",
+    "HbA1c (Diabetes)",
+    "Complete Blood Count (CBC)",
+    "Cardiology",
+    "Neurology",
+    "Orthopedics",
+    "X-Ray",
+    "MRI",
+    "CT Scan",
+    "Ultrasound",
+    "ECG",
   ];
 
   return (
     <div className="upload-dashboard">
-      {/* Upload Form Card */}
       <section className="upload-card">
         <h2>Upload Medical Report</h2>
         <form className="upload-form" onSubmit={handleUpload}>
@@ -132,18 +119,12 @@ const UploadFile = () => {
 
           <div className="form-group">
             <label>Report Type</label>
-            <select
-              value={reportType}
-              onChange={(e) => setReportType(e.target.value)}
-              required
-            >
+            <select value={reportType} onChange={(e) => setReportType(e.target.value)} required>
               <option value="">Select Report Type</option>
-              {reportTypes.map((group, idx) => (
-                <optgroup key={idx} label={group.group}>
-                  {group.options.map((opt, i) => (
-                    <option key={i} value={opt}>{opt}</option>
-                  ))}
-                </optgroup>
+              {reportTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
               ))}
             </select>
           </div>
@@ -152,9 +133,7 @@ const UploadFile = () => {
             <label>Select File</label>
             <div className="file-input-wrapper">
               <input type="file" onChange={handleFileChange} required={!file} />
-              <span className="file-input-btn">
-                {file ? file.name : "Choose a file or drag it here"}
-              </span>
+              <span className="file-input-btn">{file ? file.name : "Choose a file"}</span>
             </div>
           </div>
 
@@ -164,10 +143,8 @@ const UploadFile = () => {
         </form>
       </section>
 
-      {/* Recent Files Table */}
       <section className="recent-files-card">
         <h3>My Uploaded Files</h3>
-        
         {uploadedFiles.length === 0 ? (
           <div className="empty-state">
             <p>No files uploaded yet.</p>
@@ -190,20 +167,11 @@ const UploadFile = () => {
                     <td>{f.reportType}</td>
                     <td>{f.doctorName}</td>
                     <td className="action-links">
-                      <a
-                        href={f.fileUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="view-link"
-                      >
+                      <a href={f.fileUrl} target="_blank" rel="noopener noreferrer" className="view-link">
                         View
                       </a>
-                      <button
-                        onClick={() => handleDelete(f._id)}
-                        className="delete-btn"
-                        title="Delete File"
-                      >
-                        ✖
+                      <button onClick={() => handleDelete(f._id)} className="delete-btn" title="Delete File">
+                        x
                       </button>
                     </td>
                   </tr>

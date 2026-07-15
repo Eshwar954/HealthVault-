@@ -1,140 +1,30 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import '../styles/login.css';
-
-const BASE_URL = import.meta.env.VITE_API_URL;
+import { useState } from "react";
+import { ArrowRight, HeartPulse, LockKeyhole, Mail, ShieldCheck } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import api from "../api/client";
+import { useAuth } from "../context/AuthContext";
+import "../styles/login.css";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    role: 'user',
-  });
+  const { refreshUser } = useAuth();
+  const [formData, setFormData] = useState({ email: "", password: "", role: "user" });
+  const [submitting, setSubmitting] = useState(false);
 
-  const { email, password, role } = formData;
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      alert('Please fill in all fields');
-      return;
-    }
-
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    setSubmitting(true);
     try {
-      const validRoles = ['user', 'doctor', 'diagnostic center'];
-      if (!validRoles.includes(role)) {
-        alert('Invalid role selected');
-        return;
-      }
-
-      const response = await axios.post(
-        `${BASE_URL}/api/auth/login`,
-        { email, password, role },
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-
-      const { token, role: userRole, userId, loginId } = response.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('role', userRole);
-      localStorage.setItem('userId', userId);
-      localStorage.setItem('email', email);
-      localStorage.setItem('loginId', loginId);
-
-      alert('Login successful!');
-      switch (userRole) {
-        case 'doctor':
-          navigate('/doctor/dashboard');
-          break;
-        case 'diagnostic center':
-          navigate('/diagnostic/dashboard');
-          break;
-        default:
-          navigate('/user/dashboard');
-      }
-    } catch (error) {
-      console.error('Login Error:', error);
-      alert(error.response?.data?.message || 'Login failed. Please try again.');
-    }
+      const response = await api.post("/api/auth/login", formData);
+      await refreshUser();
+      const destination = response.data.user.role === "doctor" ? "/doctor/appointments" : response.data.user.role === "diagnostic center" ? "/diagnostic/orders" : "/user/dashboard";
+      navigate(destination);
+    } catch (error) { toast.error(error.response?.data?.message || "Unable to sign in. Please try again."); }
+    finally { setSubmitting(false); }
   };
 
-  return (
-    <main className="uv-login">
-      <section className="uv-card">
-        <div className="uv-left">
-          <h1 className="uv-brand">HealthVault</h1>
-          <p className="uv-tagline">Access your secure health record portal</p>
-          <div className="uv-info">
-            <div className="info-item">
-              <span className="icon">🔒</span>
-              <p>End-to-End Encrypted</p>
-            </div>
-            <div className="info-item">
-              <span className="icon">📱</span>
-              <p>Mobile Optimized</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="uv-right">
-          <h2 className="uv-title">Sign In</h2>
-          <p className="uv-subtitle">Select your role and enter credentials</p>
-
-          <form className="uv-form" onSubmit={handleLogin}>
-            <div className="form-group">
-              <label>Select Role</label>
-              <select name="role" value={role} onChange={handleChange}>
-                <option value="user">User</option>
-                <option value="doctor">Doctor</option>
-                <option value="diagnostic center">Diagnostic Center</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Email Address</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="email@example.com"
-                value={email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                type="password"
-                name="password"
-                placeholder="********"
-                value={password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <button type="submit" className="uv-btn">
-              Login to Portal
-            </button>
-          </form>
-
-          <p className="uv-footer">
-            Don't have an account? <Link to="/register">Create Account</Link>
-          </p>
-        </div>
-      </section>
-    </main>
-  );
+  return <main className="auth-page"><section className="auth-frame"><div className="auth-story"><Link to="/" className="auth-logo"><span><HeartPulse size={20} /></span>HealthVault</Link><div className="auth-message"><p className="auth-kicker">Private patient record access</p><h1>Secure access to unified health records.</h1><p>Appointments, reports, and diagnostic results in one carefully controlled workspace.</p><div className="auth-trust"><ShieldCheck size={18} />Access is verified for every visit.</div></div></div><section className="auth-form-panel"><div className="auth-form-heading"><p>Welcome back</p><h2>Sign in to HealthVault</h2></div><form onSubmit={handleLogin} className="auth-form"><label>Account type<select value={formData.role} onChange={(event) => setFormData({ ...formData, role: event.target.value })}><option value="user">Patient</option><option value="doctor">Doctor</option><option value="diagnostic center">Diagnostic centre</option></select></label><label>Email address<span className="auth-input"><Mail size={17} /><input type="email" value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} placeholder="you@example.com" required /></span></label><label>Password<span className="auth-input"><LockKeyhole size={17} /><input type="password" value={formData.password} onChange={(event) => setFormData({ ...formData, password: event.target.value })} placeholder="Enter your password" required /></span></label><button className="auth-submit" disabled={submitting}>{submitting ? "Signing in..." : <>Sign in <ArrowRight size={17} /></>}</button></form><p className="auth-register">New to HealthVault? <Link to="/register">Create an account</Link></p></section></section></main>;
 };
 
 export default LoginPage;

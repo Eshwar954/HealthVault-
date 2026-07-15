@@ -1,117 +1,91 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useState } from "react";
+import { HeartPulse, LogOut, Menu, X } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isNavOpen, setIsNavOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const role = user?.role?.toLowerCase().trim();
+  const isLoggedIn = Boolean(user);
 
-  // normalize role
-  const rawRole = localStorage.getItem("role");
-  const role = (rawRole || "").toLowerCase().trim();
-  const isLoggedIn = !!role;
+  const closeMenu = () => setMenuOpen(false);
+  const isActive = (path) => location.pathname === path;
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("email");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("loginId");
-    sessionStorage.removeItem("redirected");
-    setIsNavOpen(false);
+  const handleLogout = async () => {
+    await logout();
+    closeMenu();
     navigate("/");
   };
 
-  const isActive = (path) => (location.pathname === path ? "active" : "");
+  const navItems = !isLoggedIn
+    ? [
+        { to: "/", label: "Home" },
+        { to: "/#care-model", label: "How it works" },
+      ]
+    : role === "user"
+      ? [
+          { to: "/user/dashboard", label: "Overview" },
+          { to: "/user/appointments", label: "Care access" },
+          { to: "/user/files", label: "Records" },
+          { to: "/user/uploads", label: "Upload" },
+          { to: "/user/access-history", label: "Activity" },
+        ]
+      : role === "doctor"
+        ? [
+            { to: "/doctor/dashboard", label: "Profile" },
+            { to: "/doctor/appointments", label: "Appointments" },
+          ]
+        : [
+            { to: "/diagnostic/dashboard", label: "Centre profile" },
+            { to: "/diagnostic/orders", label: "Assigned orders" },
+          ];
 
   return (
-    <nav className="navbar navbar-expand-lg bg-white app-navbar border-bottom sticky-top">
-      <div className="container">
-        {/* Brand */}
-        <Link to="/" className="navbar-brand fw-bold text-primary" onClick={() => setIsNavOpen(false)}>
-          HealthVault
+    <header className="app-navbar">
+      <div className="app-navbar-inner">
+        <Link to="/" className="app-brand" onClick={closeMenu}>
+          <span className="app-brand-mark"><HeartPulse size={19} strokeWidth={2.4} /></span>
+          <span>HealthVault</span>
         </Link>
 
-        {/* Toggler */}
         <button
-          className="navbar-toggler border-0 shadow-none"
+          className="app-nav-toggle"
           type="button"
-          onClick={() => setIsNavOpen(!isNavOpen)}
-          aria-expanded={isNavOpen}
-          aria-label="Toggle navigation"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? "Close navigation" : "Open navigation"}
         >
-          <span className="navbar-toggler-icon" />
+          {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
 
-        {/* Links & Auth */}
-        <div className={`collapse navbar-collapse ${isNavOpen ? 'show' : ''}`} id="hvNav">
-          <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
-            {!isLoggedIn ? (
-              <>
-                <li className="nav-item">
-                  <Link to="/" className={`nav-link ${isActive("/")}`} onClick={() => setIsNavOpen(false)}>Home</Link>
-                </li>
-                <li className="nav-item">
-                  <a href="/#features" className="nav-link" onClick={() => setIsNavOpen(false)}>Features</a>
-                </li>
-                <li className="nav-item">
-                  <a href="/#how" className="nav-link" onClick={() => setIsNavOpen(false)}>How it works</a>
-                </li>
-              </>
-            ) : role === "user" ? (
-              <>
-                <li className="nav-item">
-                  <Link to="/user/dashboard" className={`nav-link ${isActive("/user/dashboard")}`} onClick={() => setIsNavOpen(false)}>Dashboard</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/user/files" className={`nav-link ${isActive("/user/files")}`} onClick={() => setIsNavOpen(false)}>My Files</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/user/uploads" className={`nav-link ${isActive("/user/uploads")}`} onClick={() => setIsNavOpen(false)}>Upload</Link>
-                </li>
-              </>
-            ) : role === "doctor" ? (
-              <>
-                <li className="nav-item">
-                  <Link to="/doctor/dashboard" className={`nav-link ${isActive("/doctor/dashboard")}`} onClick={() => setIsNavOpen(false)}>Dashboard</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/requestaccess" className={`nav-link ${isActive("/requestaccess")}`} onClick={() => setIsNavOpen(false)}>Request Access</Link>
-                </li>
-              </>
-            ) : (role === "diagnostic center" || role === "diagnostic") ? (
-              <>
-                <li className="nav-item">
-                  <Link to="/diagnostic/dashboard" className={`nav-link ${isActive("/diagnostic/dashboard")}`} onClick={() => setIsNavOpen(false)}>Dashboard</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/diagnostic/upload" className={`nav-link ${isActive("/diagnostic/upload")}`} onClick={() => setIsNavOpen(false)}>Upload Results</Link>
-                </li>
-              </>
-            ) : null}
-          </ul>
+        <div className={`app-nav-content ${menuOpen ? "open" : ""}`}>
+          <nav className="app-nav-links" aria-label="Primary navigation">
+            {navItems.map((item) => (
+              <Link key={item.to} to={item.to} onClick={closeMenu} className={isActive(item.to) ? "active" : ""}>
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
-          <div className="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+          <div className="app-nav-actions">
             {isLoggedIn ? (
-              <button className="btn btn-outline-danger btn-sm px-4 rounded-pill" onClick={handleLogout}>
-                Logout
+              <button className="app-logout" onClick={handleLogout}>
+                <LogOut size={16} /> Sign out
               </button>
             ) : (
               <>
-                <Link to="/login" className="btn btn-primary btn-sm px-4 rounded-pill" onClick={() => setIsNavOpen(false)}>
-                  Login
-                </Link>
-                <Link to="/register" className="btn btn-outline-primary btn-sm px-4 rounded-pill d-none d-sm-inline-block" onClick={() => setIsNavOpen(false)}>
-                  Register
-                </Link>
+                <Link to="/login" onClick={closeMenu} className="app-login-link">Sign in</Link>
+                <Link to="/register" onClick={closeMenu} className="btn btn-primary">Create account</Link>
               </>
             )}
           </div>
         </div>
       </div>
-    </nav>
+    </header>
   );
 };
 

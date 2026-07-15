@@ -1,34 +1,37 @@
 const User = require('../models/User');
-const mongoose = require('mongoose');
+
+const pickAllowed = (source, allowedFields) =>
+    allowedFields.reduce((result, field) => {
+        if (Object.prototype.hasOwnProperty.call(source, field)) {
+            result[field] = source[field];
+        }
+        return result;
+    }, {});
+
+const userEditableFields = [
+    'name',
+    'phone',
+    'dateOfBirth',
+    'gender',
+    'bloodType',
+    'height',
+    'weight',
+    'city',
+    'state',
+    'emergencyContactName',
+    'emergencyContactNumber',
+];
 
 const updateUser = async (req, res) => {
     try {
-        const { email, userId, loginId, password,bmi, ...updatedData } = req.body;
-
-        if (!email && !userId && !loginId) {
-            return res.status(400).json({ message: 'Provide email, userId, or loginId' });
-        }
-
-        let query = {};
-        if (email) query.email = email;
-        if (userId) {
-            if (!mongoose.Types.ObjectId.isValid(userId)) {
-                return res.status(400).json({ message: 'Invalid user ID format' });
-            }
-            query._id = userId;
-        }
-        if (loginId) query.loginId = loginId;
-
-        if (Object.keys(query).length === 0) {
-            return res.status(400).json({ message: 'Invalid query parameters' });
-        }
+        const updatedData = pickAllowed(req.body, userEditableFields);
 
         if (updatedData.height && updatedData.weight) {
             updatedData.bmi = (updatedData.weight / ((updatedData.height / 100) ** 2)).toFixed(2);
         }
 
         const updatedUser = await User.findOneAndUpdate(
-            query,
+            { _id: req.user._id, role: 'user' },
             { $set: updatedData },
             { new: true, runValidators: true }
         ).select('-password');

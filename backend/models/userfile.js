@@ -29,27 +29,7 @@ const userfileSchema = new mongoose.Schema(
         reportType: {  // New field
             type: String,
             required: true,
-            enum: [
-                // General
-                "General Checkup", "Prescription", "Discharge Summary", "Medical Certificate",
-        
-                // Lab Tests
-                "Blood Test", "Urine Test", "Stool Test", "Liver Function Test (LFT)",
-                "Kidney Function Test (KFT)", "Thyroid Profile", "Lipid Profile",
-                "HbA1c (Diabetes)", "Complete Blood Count (CBC)",
-        
-                // Specialist Reports
-                "Cardiology", "Neurology", "Orthopedics", "Gastroenterology", "Dermatology",
-                "Pulmonology", "Endocrinology", "Nephrology", "Urology", "ENT (Ear, Nose, Throat)",
-        
-                // Imaging & Diagnostics
-                "X-Ray", "MRI", "CT Scan", "Ultrasound", "Echocardiogram (ECHO)",
-                "ECG", "EEG", "PET Scan", "Mammogram",
-        
-                // Miscellaneous
-                "Vaccination Record", "Allergy Test", "Mental Health Evaluation",
-                "Vision Test", "Hearing Test", "Dental Report", "Gynecology", "Pediatrics"
-              ],// Add more if needed
+            trim: true,
         },
         createdAt: {
             type: Date,

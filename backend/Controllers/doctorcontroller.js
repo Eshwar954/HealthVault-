@@ -1,8 +1,56 @@
 const User = require("../models/User");
 const mongoose = require("mongoose");
 
+const doctorEditableFields = [
+  "name",
+  "specialization",
+  "experience",
+  "phone",
+  "clinicAddress",
+  "city",
+  "state",
+];
+
+const pickAllowed = (source, allowedFields) =>
+  allowedFields.reduce((result, field) => {
+    if (Object.prototype.hasOwnProperty.call(source, field)) {
+      result[field] = source[field];
+    }
+    return result;
+  }, {});
+
+const getDoctorMe = (req, res) => {
+  res.json({ doctor: req.user });
+};
+
+const listDoctors = async (req, res) => {
+  try {
+    const doctors = await User.find({ role: "doctor" })
+      .select("name email specialization clinicAddress experience city state")
+      .sort({ name: 1 });
+    res.json({ doctors });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch doctors" });
+  }
+};
+
 const updateDoctor = async (req, res) => {
   try {
+    if (req.user) {
+      const updatedData = pickAllowed(req.body, doctorEditableFields);
+      const updatedDoctor = await User.findOneAndUpdate(
+        { _id: req.user._id, role: "doctor" },
+        { $set: updatedData },
+        { new: true, runValidators: true }
+      ).select("-password");
+
+      if (!updatedDoctor) {
+        return res.status(404).json({ message: "Doctor not found or update failed" });
+      }
+
+      return res.status(200).json({ message: "Doctor updated successfully", doctor: updatedDoctor });
+    }
+
     const { email, doctorId, ...updatedData } = req.body;
 
     if (!email && !doctorId) {
@@ -61,4 +109,4 @@ const updateDoctor = async (req, res) => {
   }
 };
 
-module.exports = { updateDoctor };
+module.exports = { updateDoctor, getDoctorMe, listDoctors };
